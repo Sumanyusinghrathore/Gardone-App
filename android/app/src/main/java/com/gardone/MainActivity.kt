@@ -1,10 +1,10 @@
 package com.gardone
-
+import android.os.Bundle
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
-
+import org.devio.rn.splashscreen.SplashScreen;
 class MainActivity : ReactActivity() {
 
   /**
@@ -12,6 +12,14 @@ class MainActivity : ReactActivity() {
    * rendering of the component.
    */
   override fun getMainComponentName(): String = "Gardone"
+
+  /**
+   * Display the splash screen on app start.
+   */
+  override fun onCreate(savedInstanceState: Bundle?) { // Ensure Bundle is recognized
+      SplashScreen.show(this) // Show the splash screen
+      super.onCreate(savedInstanceState)
+  }
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
