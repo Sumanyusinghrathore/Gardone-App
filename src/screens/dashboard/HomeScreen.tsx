@@ -202,7 +202,7 @@ const HomeScreen = () => {
           </LinearGradient>
         </View>
         <View>
-        <DynamicText content="Why Choose Us?" />
+        <DynamicText content="Why Choose Us? " />
         </View>
       </View>
     </ScrollView>
