@@ -1,48 +1,29 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import React, { useEffect } from 'react';
+import { StyleSheet, useColorScheme } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import AppContext from './src/context/AppContext';
+import MainStack from './src/routes/MainStack';
 import SplashScreen from 'react-native-splash-screen';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Onbording from './src/screens/Onbordingscreens/Onbording';
 
-const Stack = createStackNavigator();
-
-
-SplashScreen.hide();
-
-function App(): React.JSX.Element {
+const App = (): React.JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
 
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? '#1c1c1c' : '#ffffff',
   };
 
   return (
-    <NavigationContainer>
-            <Stack.Navigator>
-            <Stack.Screen name="Onbording" component={Onbording} options={{ headerShown: false }} />
-            </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AppContext>
+        <MainStack />
+      </AppContext>
+    </GestureHandlerRootView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   sectionContainer: {
