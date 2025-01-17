@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, ScrollView, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 import { COLORS, FONTS } from '../../themes/theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -10,10 +10,27 @@ import Card from '../../components/Arrivals&Sellers/Card';
 import DynamicText from '../../components/CustomText/DynamicText';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+
+// Icon Images
+import PackageIcon from '../../assets/Icons/Secure&Recyclable_Packaging.svg';
+import ReplacementIcon from '../../assets/Icons/FreeReplacement.svg';
+import PlantIcon from '../../assets/Icons/Chemical_Free_Plants.svg';
+import WateringIcon from '../../assets/Icons/Self-Watering-Pots.svg';
+import Rightcommas from '../../assets/Icons/Right-commas.svg';
+import Leftcommas from '../../assets/Icons/Left-commas.svg';
+
 const { width } = Dimensions.get('window');
 
 const screenWidth = Dimensions.get('window').width;
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../routes/types'; // Adjust the import path as necessary
+import { LinearGradientText } from 'react-native-linear-gradient-text';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
+
 const HomeScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
 
   const [searchText, setSearchText] = useState('');
   const handleSearchInputChange = (text: string) => {
@@ -22,13 +39,17 @@ const HomeScreen = () => {
 
   // Handle the search trigger (e.g., when Search icon is pressed)
   const handleSearch = () => {
+    navigation.navigate("Search", { name: "Search" });
     console.log('Search text:', searchText);
     // Add your search logic here (e.g., API call or filtering data)
   };
   const categories = [
     { id: '1', name: 'Indoor', image: require('../../assets/Images/Indoor.png') },
     { id: '2', name: 'Pots & Planter', image: require('../../assets/Images/Pots&Planter.png') },
-    { id: '3', name: 'Fertilizers', image: require('../../assets/Images/Indoor.png') },
+    { id: '3', name: 'Fertilizers', image: require('../../assets/Images/Fertilizers.png') },
+    { id: '4', name: 'Soil', image: require('../../assets/Images/Soil.png') },
+    { id: '5', name: 'Seeds', image: require('../../assets/Images/Seeds.png') },
+    { id: '6', name: 'Tools', image: require('../../assets/Images/Tools.png') },
   ];
 
   const ArrivalscardData = [
@@ -58,14 +79,38 @@ const HomeScreen = () => {
     },
   ];
 
+  const testimonials = [
+    {
+      id: '1',
+      text: 'Lorem ipsum dolor sit amet consectetur. Etiam tellus auctor posuere et sit faucibus convallis libero ut. ',
+      author: 'Jaivardhan Singh',
+    },
+    {
+      id: '2',
+      text: 'Lorem ipsum dolor sit amet consectetur. Etiam tellus auctor posuere et sit faucibus convallis libero ut.',
+      author: 'Sumanyu Singh Rathore',
+    },
+    {
+      id: '3',
+      text: 'Lorem ipsum dolor sit amet consectetur. Etiam tellus auctor posuere et sit faucibus convallis libero ut.',
+      author: 'Abbas',
+    },
+  ];
+
 
   const renderCategoryCard = ({ item }: { item: { id: string; name: string; image: any } }) => (
-    <TouchableOpacity activeOpacity={ACTIVE_OPACITY} style={[styles.categoryCard, { width: screenWidth * 0.4 }]}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Categorie', { name: item.name })
+      }
+      activeOpacity={ACTIVE_OPACITY}
+      style={[styles.categoryCard, { width: screenWidth * 0.4 }]}
+    >
       <Image source={item.image} style={styles.categoryImage} />
       <Text style={styles.categoryText}>{item.name}</Text>
     </TouchableOpacity>
   );
-
+  
 
   return (
     <ScrollView style={styles.container}>
@@ -93,7 +138,7 @@ const HomeScreen = () => {
           <TextInput
             onSubmitEditing={handleSearch}
             style={styles.searchInput}
-            placeholder="Search..."
+            placeholder="Search"
             value={searchText}
             onChangeText={handleSearchInputChange}
 
@@ -137,7 +182,7 @@ const HomeScreen = () => {
         />
         <View style={styles.sectionHeader}>
           <DynamicText content="New Arrivals" />
-          <TouchableOpacity style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
+          <TouchableOpacity onPress={()=> {navigation.navigate("Arrivals", { name: "New Arrivals" })}}  style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
             <Text style={styles.seeMoreText}>See More</Text>
           </TouchableOpacity>
         </View>
@@ -160,7 +205,7 @@ const HomeScreen = () => {
         </ScrollView>
         <View style={styles.sectionHeader}>
           <DynamicText content="Best Sellers" />
-          <TouchableOpacity style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
+          <TouchableOpacity onPress={()=> {navigation.navigate("Arrivals", { name: "Best Sellers" })}}  style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
             <Text style={styles.seeMoreText}>See More</Text>
           </TouchableOpacity>
         </View>
@@ -193,16 +238,67 @@ const HomeScreen = () => {
             style={styles.gradient}
           >
 
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>"Healthy plants thrive with our expert care and attention."</Text>
-              <TouchableOpacity style={styles.knowmoreButton} activeOpacity={ACTIVE_OPACITY}>
-            <Text style={styles.knowmoreText}>Know More</Text>
-          </TouchableOpacity>
+            <View style={styles.overlaptextContainer}>
+              <Text style={styles.overlaptext}>"Healthy plants thrive with our expert care and attention."</Text>
+              <TouchableOpacity style={styles.overlapknowmoreButton} activeOpacity={ACTIVE_OPACITY}>
+                <Text style={styles.overlapknowmoreText}>Know More</Text>
+              </TouchableOpacity>
             </View>
           </LinearGradient>
         </View>
         <View>
-        <DynamicText content="Why Choose Us? " />
+          <DynamicText content="Why Choose Us? " />
+          <View style={styles.features}>
+            <View style={styles.featureItem}>
+              <PackageIcon width={60} height={60} />
+              <Text style={styles.featureText}>Secure & Recyclable Packaging</Text>
+            </View>
+
+            <View style={styles.featureItem}>
+              <ReplacementIcon width={60} height={60} />
+              <Text style={styles.featureText}>Free Replacement If Damage</Text>
+            </View>
+            <View style={styles.featureItem}>
+              <PlantIcon width={60} height={60} />
+              <Text style={styles.featureText}>Chemical Free Plants</Text>
+            </View>
+
+            <View style={styles.featureItem}>
+              <WateringIcon width={60} height={60} />
+              <Text style={styles.featureText}>Self-Watering Pots With Every Plant</Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <DynamicText content="Testimonials" />
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={testimonials}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <LinearGradient
+                colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
+                style={styles.testimonialBorder}
+              >
+                <View style={styles.testimonial}>
+                  <Leftcommas width={20} height={20} style={styles.leftComma} />
+                  <Text style={styles.testimonialText}>{item.text}</Text>
+                  <Rightcommas width={20} height={20} style={styles.rightComma} />
+                  <View style={styles.authorContainer}>
+                  <LinearGradientText
+                    colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
+                    text={item.author}
+                    start={{ x: 0.5, y: 0 }}  // Start at the top center
+                    end={{ x: 0.5, y: 1 }}
+                    textStyle={styles.testimonialAuthor}
+                    textProps={{ allowFontScaling: true }}
+                  />
+                  </View>
+                </View>
+              </LinearGradient>
+            )}
+          />
         </View>
       </View>
     </ScrollView>
@@ -240,10 +336,12 @@ const styles = StyleSheet.create({
   greetingText: {
     fontSize: 20,
     color: COLORS.HeadingColor,
+    fontFamily: FONTS.AvenirBold
   },
   userName: {
     fontSize: 18,
     color: COLORS.HeadingColor,
+    fontFamily: FONTS.AvenirRegular
   },
   handIcon: {
     marginHorizontal: 10
@@ -255,16 +353,19 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    marginHorizontal: width * 0.04,
-    borderRadius: width * 0.02,
-    padding: width * 0.02,
-    marginVertical: width * .03,
+    backgroundColor: COLORS.white,
+    marginHorizontal: 10,
+    borderRadius: 15,
+    padding: 10,
+    marginVertical: 10,
+    borderColor: COLORS.primary,
+    borderWidth: 1,
+
   },
   searchIcon: {
-    width: width * 0.05,
-    height: width * 0.05,
-    marginRight: width * 0.02,
+    width: 15,
+    height: 15,
+    marginRight: 5,
   },
   searchInput: {
     flex: 1,
@@ -272,13 +373,14 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: 5,
     fontSize: 16,
-    color: COLORS.primary
+    color: COLORS.primary,
+    fontFamily: FONTS.AvenirRegular
   },
   searchText: {
     fontSize: 18,
-    fontWeight: 'bold',
     marginVertical: 10,
-    color: COLORS.primary
+    color: COLORS.primary,
+    fontFamily: FONTS.AvenirRegular
   },
   micIcon: {
     width: width * 0.05,
@@ -287,7 +389,7 @@ const styles = StyleSheet.create({
   bannerimg: {
     height: '100%',
     objectFit: 'contain',
-    width: 380
+    width: "100%"
   },
   wrapper: {
     height: 200, // Adjust based on your design
@@ -329,8 +431,9 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   categoryText: {
-    fontSize: width * 0.035,
+    fontSize: 20,
     color: '#000',
+    fontFamily: FONTS.AvenirBold
   },
   scrollContainer: {
     paddingLeft: 15,
@@ -351,16 +454,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   seeMoreText: {
-    fontSize: 12,
-    color: '#fff', // Button text color
-    fontWeight: '600',
+    fontSize: 14,
+    color: COLORS.white, // Button text color
+    fontFamily: FONTS.AvenirDemi
   },
-  gradientcontainer:{
-    marginVertical: 120, 
-    position: 'relative', 
+  gradientcontainer: {
+    marginVertical: 120,
+    position: 'relative',
     justifyContent: 'center',
-    alignItems: 'flex-start', 
-    marginHorizontal:10
+    alignItems: 'flex-start',
+    marginHorizontal: 10
   },
   gradient: {
     position: 'absolute', // Ensure gradient is positioned over the image
@@ -370,7 +473,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'flex-start',  // Align gradient to the left
-    opacity: 0.7,
   },
   image: {
     width: '100%',
@@ -378,7 +480,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',  // Ensure the image covers the gradient area without distortion
     position: 'absolute',
   },
-  textContainer: {
+  overlaptextContainer: {
     position: 'absolute',
     left: 0,  // Align text to the left
     width: '65%',  // Limit text width to the left half
@@ -387,25 +489,88 @@ const styles = StyleSheet.create({
     zIndex: 1,  // Ensure the text is above the image and gradient
     flexDirection: 'column',
   },
-  text: {
+  overlaptext: {
     fontSize: 20,
     color: COLORS.white,
     fontFamily: FONTS.AvenirBold,
     marginBottom: 10,
   },
-  knowmoreButton:{
-    width:"60%",
-    backgroundColor:COLORS.white,
+  overlapknowmoreButton: {
+    width: "60%",
+    backgroundColor: COLORS.white,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 10,
+    opacity: 10
   },
-  knowmoreText: {
+  overlapknowmoreText: {
     color: COLORS.HeadingColor,
     fontSize: 14,
-    fontFamily:FONTS.AvenirBold
+    fontFamily: FONTS.AvenirBold
+  },
+  features: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    marginHorizontal: 20
+  },
+  featureItem: {
+    width: width / 2 - 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 15
+  },
+  featureText: {
+    fontSize: 12,
+    color: COLORS.HeadingColor,
+    marginLeft: 10,
+    marginHorizontal: 35,
+    fontFamily: FONTS.AvenirRegular,
+  },
+  testimonialBorder: {
+    borderRadius: 10,
+    marginRight: 20,
+    padding: 2,
+    marginVertical:20
+  },
+  testimonial: {
+    backgroundColor: COLORS.white,
+    borderRadius: 8,
+    padding: 30,
+    alignItems: 'center',
+    width: width * 0.8,
+    flex: 1, // Allows the content to expand and fill the available space
+    justifyContent: 'center', // Ensures content stays centered
+    minHeight: 100, // Ensures a minimum height to avoid collapsing for smaller text
+  },
+  testimonialText: {
+    fontSize: 16,
+    color: COLORS.HeadingColor,
+    textAlign: 'center',
+    marginBottom: 10,
+    fontFamily: FONTS.AvenirRegular
+  },
+  authorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center', // this keeps text and author centered on the same line
+  },
+  testimonialAuthor: {
+    fontSize: 14,
+    fontFamily: FONTS.AvenirBold
+  },
+  leftComma: {
+    position: 'absolute',
+    top: 5,
+    left: 10,
+  },
+  rightComma: {
+    position: 'absolute',
+    bottom: 5,
+    right: 10,
   },
 });
 

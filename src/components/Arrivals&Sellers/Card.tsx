@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import PlusIcon from '../../assets/Icons/PlusVector.svg'
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
+import { COLORS, FONTS } from '../../themes/theme';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../routes/types';
 
 type CardProps = {
   title: string;
@@ -12,7 +16,9 @@ type CardProps = {
   backgroundColor: string;
 };
 
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 const Card: React.FC<CardProps> = ({ title, type, age, price, image, backgroundColor }) => {
+  const navigation = useNavigation<NavigationProp>();
   return (
     <View style={[styles.cardContainer, { backgroundColor }]}>
       <View style={styles.cardContent}>
@@ -30,7 +36,7 @@ const Card: React.FC<CardProps> = ({ title, type, age, price, image, backgroundC
         </View>
 
         {/* Add button */}
-        <TouchableOpacity style={styles.addButton} activeOpacity={ACTIVE_OPACITY}>
+        <TouchableOpacity onPress={()=> {navigation.navigate("ProductDetail", { name: "Product Details" })}} style={styles.addButton} activeOpacity={ACTIVE_OPACITY}>
           <PlusIcon width={20} height={20} fill="#fff" />
         </TouchableOpacity>
       </View>
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     padding: 5,
-    height: 130,
+    height: 140,
   },
   cardContent: {
     flexDirection: 'row', // Align image and text side by side
@@ -66,42 +72,45 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 15,
     marginHorizontal: 10, // Space between image and text
-    marginVertical: 10
+    marginVertical: 15
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     resizeMode: 'contain',
   },
   textContainer: {
     flex: 1, // Take up remaining space
     justifyContent: 'center',
+    
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff',
+    color: COLORS.white,
     marginBottom: 5,
+    fontFamily:FONTS.AvenirBold
   },
   subText: {
-    fontSize: 14,
-    color: '#e0e0e0',
+    fontSize: 12,
+    color: COLORS.white,
+    fontFamily:FONTS.AvenirRegular,
+    marginVertical:3
   },
   price: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
+    color: COLORS.white,
+    fontFamily:FONTS.AvenirBold,
     marginTop: 5,
   },
   addButton: {
     width: 30,
     height: 30,
     borderRadius: 5,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     justifyContent: 'center',
     alignItems: 'center', 
     position: 'absolute',
-    top: 80,          
+    top: 90,          
     right: 10,
   },
 });

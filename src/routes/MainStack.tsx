@@ -52,11 +52,11 @@ const MainStack = () => {
         translucent
         barStyle={
           navigationState === navigationStateType.HOME
-            ? 'light-content'
-            : 'dark-content'
+          ? 'light-content'
+          : 'dark-content'
         }
         backgroundColor={COLORS.transparent}
-      />
+        />
       {renderStack()}
     </NavigationContainer>
   );

@@ -7,7 +7,7 @@ import Onboarding from '../screens/Onbordingscreens/Onbording';
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
+  <Stack.Navigator screenOptions={{ headerShown: false ,orientation: "portrait",gestureDirection:'horizontal' }}>
     <Stack.Screen name="Onboarding" component={Onboarding} />
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Signup" component={Register} />

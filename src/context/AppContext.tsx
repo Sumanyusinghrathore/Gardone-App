@@ -8,10 +8,13 @@ export const navigationStateType = {
   LOADING: 'LOADING',
 };
 
+type NavigationStateType =
+  (typeof navigationStateType)[keyof typeof navigationStateType];
+
 type AppContextType = {
   userData: any;
   navigationState: string;
-  setNavigationState: (state: string) => void;
+  setNavigationState: React.Dispatch<React.SetStateAction<NavigationStateType>>;
   setUserData: (data: any) => void;
 };
 
@@ -27,17 +30,16 @@ const AppContext = ({ children }: AppContextProps) => {
 
   useEffect(() => {
     const saveDetail = async () => {
-      if (userData) {
-        await AsyncStorage.setItem('userData', JSON.stringify(userData));
+      const storedUserData = await AsyncStorage.getItem('userData');
+      if (storedUserData) {
+        setUserData(JSON.parse(storedUserData));
+        setNavigationState(navigationStateType.HOME);
+      }
+      else {
+        setNavigationState(navigationStateType.AUTH);
       }
     };
     saveDetail();
-
-    if (userData) {
-      setNavigationState(navigationStateType.HOME);
-    } else if (navigationState !== navigationStateType.LOADING) {
-      setNavigationState(navigationStateType.AUTH);
-    }
   }, [userData, navigationState]);
 
   return (

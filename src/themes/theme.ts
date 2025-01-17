@@ -27,10 +27,11 @@ export const COLORS = {
   red: '#dd2918',
   blue: '#0000FF',
   RoyalBlue: '#2e64e5',
-  MoodyBlue: '#7474d2',
+  MoodyBlue: '#DCE8D6',
   header:'#202020',
   bordercolor:'#BFCC97',
   HeadingColor:'#002140',
+
 
   lightGray: '#F5F5F6',
   lightGray2: '#DCDCDC',
@@ -94,6 +95,11 @@ export const FONTS = {
   AvenirUltraLight:'AvenirNextCyr-UltraLight'
 };
 
-const appTheme = {COLORS,FONTS};
+export const REMOVESTRING = (value: number): string => {
+  const numericValue = Number(value); // Ensure value is a number
+  return `${FONTS.rupeeSymbol}${numericValue.toFixed()}`; // Use numericValue
+};
+
+const appTheme = {COLORS,FONTS,REMOVESTRING};
 
 export default appTheme;
