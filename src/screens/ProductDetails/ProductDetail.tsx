@@ -7,12 +7,18 @@ import DynamicText from '../../components/CustomText/DynamicText';
 import { ScrollView } from 'react-native-gesture-handler';
 import Minus from '../../assets/Icons/Divid.svg'
 import Plus from '../../assets/Icons/Plus.svg'
-
+import Collapsible from 'react-native-collapsible';
+import { Divider } from '@rneui/themed';
 
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedPlanter, setSelectedPlanter] = useState('');
   const [selectedAge, setSelectedAge] = useState('');
+  const [activeAccordion, setActiveAccordion] = useState<null | number>(null);
+
+  const toggleAccordion = (index: number) => {
+    setActiveAccordion(prev => (prev === index ? null : index));
+  };
 
   const handleIncreaseQuantity = () => setQuantity(prev => prev + 1);
   const handleDecreaseQuantity = () => setQuantity(prev => (prev > 0 ? prev - 1 : 0));
@@ -99,6 +105,47 @@ const ProductDetail = () => {
           <Plus/>
           </TouchableOpacity>
         </View>
+      </View>
+      {/* Accordion 1 */}
+      <View style={{marginVertical:10}}>
+        <TouchableOpacity
+          onPress={() => toggleAccordion(1)}
+          style={styles.header}
+        >
+          <Text style={styles.headerText}>Description</Text>
+          <Text style={styles.icon}>{activeAccordion === 1 ? '↑' : '↓'}</Text>
+        </TouchableOpacity>
+        <Collapsible collapsed={activeAccordion !== 1}>
+          <View style={styles.content}>
+            <Text style={styles.contentText}>
+              Add a touch of vibrant tradition to your jewelry collection with
+              our Authentic Maasai Beaded Bracelet. Handcrafted by skilled
+              Maasai artisans, this stunning bracelet showcases the rich
+              cultural heritage and artistry of the Maasai people of East
+              Africa.
+            </Text>
+          </View>
+        </Collapsible>
+      </View>
+      <Divider />
+      {/* Accordion 2 */}
+      <View style={{marginVertical:10}}>
+        <TouchableOpacity
+          onPress={() => toggleAccordion(2)}
+          style={styles.header}
+        >
+          <Text style={styles.headerText}>Details</Text>
+          <Text style={styles.icon}>{activeAccordion === 2 ? '↑' : '↓'}</Text>
+        </TouchableOpacity>
+        <Collapsible collapsed={activeAccordion !== 2}>
+          <View style={styles.content}>
+            <Text style={styles.contentText}>
+              Our bracelets are made with high-quality beads and materials to
+              ensure durability and longevity. Available in various colors and
+              sizes to suit your personal style.
+            </Text>
+          </View>
+        </Collapsible>
       </View>
      </ScrollView>
     </View>
@@ -241,5 +288,31 @@ fontSize: 20,
     marginHorizontal: 20,
     color:COLORS.HeadingColor,
     marginVertical:5
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
+    padding: 15,
+  },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  icon: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  content: {
+    backgroundColor: '#fff',
+    padding: 15,
+  },
+  contentText: {
+    fontSize: 16,
+    color: '#333',
+    lineHeight: 24,
   },
 });
