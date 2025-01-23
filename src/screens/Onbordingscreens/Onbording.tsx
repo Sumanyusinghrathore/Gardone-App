@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#064e3b",
         alignItems: "center",
+        marginHorizontal:10,
     },
     slide: {
         justifyContent: "center",

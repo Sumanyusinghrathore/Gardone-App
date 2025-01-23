@@ -50,7 +50,7 @@ const TabNavigation = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, size }) =>
             focused ? (
-              <HomeIconActive height={80} />
+              <HomeIconActive height={85} />
             ) : (
               <HomeIconInactive width={size} height={size} />
             ),

@@ -30,7 +30,9 @@ export const COLORS = {
   MoodyBlue: '#DCE8D6',
   header:'#202020',
   bordercolor:'#BFCC97',
+  bordercolor2:"#C0DDB2",
   HeadingColor:'#002140',
+  startcolor:"#EDD523",
 
 
   lightGray: '#F5F5F6',

@@ -55,7 +55,7 @@ const MainStack = () => {
           ? 'light-content'
           : 'dark-content'
         }
-        backgroundColor={COLORS.transparent}
+        backgroundColor={COLORS.primary}
         />
       {renderStack()}
     </NavigationContainer>

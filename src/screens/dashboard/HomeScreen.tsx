@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    padding: 10,
+    padding: 0,
   },
   verticalpadding: {
     paddingVertical: 50
@@ -388,11 +388,12 @@ const styles = StyleSheet.create({
   },
   bannerimg: {
     height: '100%',
+    width:'90%',
     objectFit: 'contain',
-    width: "100%"
   },
   wrapper: {
     height: 200, // Adjust based on your design
+    
   },
   dotStyle: {
     backgroundColor: COLORS.secondary, // Inactive dot color
@@ -534,7 +535,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 20,
     padding: 2,
-    marginVertical:20
+    marginVertical:20,
+    marginLeft:10
   },
   testimonial: {
     backgroundColor: COLORS.white,
