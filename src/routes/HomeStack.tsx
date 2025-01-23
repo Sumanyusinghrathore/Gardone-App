@@ -1,14 +1,18 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigation from '../screens/Tabs/Tabnavigation';
 import ProductDetail from '../screens/ProductDetails/ProductDetail';
 import { TouchableOpacity } from 'react-native';
 import Leftarrow from '../assets/Icons/Leftarrow.svg';
 import Wishlist from '../assets/Icons/WishlistDeactive.svg';
 import { COLORS, FONTS } from '../themes/theme';
+import Profile from '../screens/Profile/Profile';
+import Filter from '../screens/Filter/Filterscreen';
+import Filtericon from '../assets/Icons/FilterSvg.svg'
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
+// Reusable header styles or configurations
 const headerOptions = (bg: string) => ({
   headerShown: true,
   headerStyle: { backgroundColor: bg ?? COLORS.primary },
@@ -19,22 +23,31 @@ const headerOptions = (bg: string) => ({
 
 export const screens = [
   { name: 'Home', component: TabNavigation, options: { headerShown: false } },
-  { name: 'ProductDetail', component: ProductDetail, options: headerOptions(COLORS.white)  },
+  { name: 'ProductDetail', component: ProductDetail, options: headerOptions(COLORS.white) },
+  {
+    name: 'Profile',
+    component: Profile,
+    options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'My Profile', // Set the custom header name here
+    },
+  },
+  { name: 'Filter', component: Filter, options: headerOptions(COLORS.white) },
 ];
 
-const HomeStack = () => {
+const App = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, gestureDirection: 'horizontal' }}>
       {screens.map((screen, index) => (
         <Stack.Screen
           key={index}
           name={screen.name}
           component={screen.component}
           options={({ route, navigation }: any) => {
-            const categoryName = route?.params?.name ?? screen.name;
+            const categoryName = route?.params?.name ?? (screen.options as any).headerTitle ?? screen.name;
             return {
               headerShown: screen.options.headerShown,
-              headerTitle: categoryName, // Use categoryName for dynamic titles
+              headerTitle: categoryName, // Use route.params?.categoryName for dynamic titles
               headerTitleAlign: 'center',
               headerStyle: {
                 backgroundColor: COLORS.white,
@@ -47,15 +60,16 @@ const HomeStack = () => {
                 fontSize: 20,
               },
               headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Leftarrow width={24} height={24} />
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 25 }}>
+                  <Leftarrow color="white" />
                 </TouchableOpacity>
               ),
-              headerRight: () => (
-                <TouchableOpacity onPress={() => console.log('Save Wishlist')}>
+              // Conditionally render Wishlist icon for Search screen
+              headerRight: screen.name === 'ProductDetail' ? () => (
+                <TouchableOpacity onPress={() => console.log('Save Wishlist')} style={{ paddingRight: 25 }}>
                   <Wishlist />
                 </TouchableOpacity>
-              ),
+              ) : undefined, // Only show wishlist icon on ProductDetail screen
             };
           }}
         />
@@ -64,4 +78,4 @@ const HomeStack = () => {
   );
 };
 
-export default HomeStack;
+export default App;

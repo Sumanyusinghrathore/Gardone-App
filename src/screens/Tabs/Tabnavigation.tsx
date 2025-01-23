@@ -1,9 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS } from '../../themes/theme';
-import HomeScreen from '../dashboard/HomeScreen';
+import { COLORS, FONTS } from '../../themes/theme';
 import CartScreen from '../Cart/Cart';
 import WishlistScreen from '../Wishlist/Wishlist';
 import ServicesScreen from '../Services/Services';
@@ -15,9 +13,9 @@ import WishlistIconActive from '../../assets/Icons/WishlistActive.svg';
 import WishlistIconInactive from '../../assets/Icons/WishlistDeactive.svg';
 import ServicesIconActive from '../../assets/Icons/ServiceActive.svg';
 import ServicesIconInactive from '../../assets/Icons/ServicesDeactive.svg';
-import Categorie from '../Categories/Categorie';
 import Bottomnavigation from './Bottomnavigation';
-
+import { TouchableOpacity } from 'react-native';
+import Icnicons from '../../assets/Icons/Leftarrow.svg';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +48,7 @@ const TabNavigation = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, size }) =>
             focused ? (
-              <HomeIconActive height={85} />
+              <HomeIconActive height={80} />
             ) : (
               <HomeIconInactive width={size} height={size} />
             ),
@@ -60,11 +58,28 @@ const TabNavigation = () => {
         name="Wishlist"
         component={WishlistScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerTitle: "Wishlist", // Use route.params?.categoryName for dynamic titles
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            elevation: 0, // Hide shadow on Android
+            shadowOpacity: 0, // Hide shadow on iOS
+          },
+          headerTitleStyle: {
+            fontFamily: FONTS.AvenirBold,
+            color: COLORS.header,
+            fontSize: 20,
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 25 }}>
+              <Icnicons color="white" />
+            </TouchableOpacity>
+          ),
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, size }) =>
             focused ? (
-              <WishlistIconActive height={80}  />
+              <WishlistIconActive height={80} />
             ) : (
               <WishlistIconInactive width={size} height={size} />
             ),
@@ -76,7 +91,7 @@ const TabNavigation = () => {
         options={{
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, size}) =>
+          tabBarIcon: ({ focused, size }) =>
             focused ? (
               <CartIconActive height={80} />
             ) : (
@@ -92,7 +107,7 @@ const TabNavigation = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, size }) =>
             focused ? (
-              <ServicesIconActive height={80}  />
+              <ServicesIconActive height={80} />
             ) : (
               <ServicesIconInactive width={size} height={size} />
             ),

@@ -121,7 +121,7 @@ const HomeScreen = () => {
             <Text style={styles.greetingText}>Welcome</Text>
             <View style={styles.gratingTextcontainer}>
               <Text style={styles.userName}>Sumanyu Singh Rathore</Text>
-              <TouchableOpacity activeOpacity={ACTIVE_OPACITY}>
+              <TouchableOpacity activeOpacity={ACTIVE_OPACITY} onPress={()=> {navigation.navigate("Profile")}}>
                 <HandIcon width={20} height={20} fill="#000" style={styles.handIcon} />
               </TouchableOpacity>
             </View>

@@ -29,14 +29,14 @@ export const screens = [
 
 const App = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, gestureDirection: 'horizontal' }}>
       {screens.map((screen, index) => (
         <Stack.Screen
           key={index}
           name={screen.name}
           component={screen.component}
           options={({ route, navigation }: any) => {
-            const categoryName = route?.params?.name ?? screen.name;
+            const categoryName = route?.params?.name ?? (screen.options as any).headerTitle ?? screen.name;
             return {
               headerShown: screen.options.headerShown,
               headerTitle: categoryName, // Use route.params?.categoryName for dynamic titles
@@ -60,10 +60,12 @@ const App = () => {
               headerRight: () => {
                 if (screen.name === 'Search') {
                   return (
-                    <TouchableOpacity onPress={() => console.log('Save Wishlist')} style={{ paddingRight: 25 }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate("Filter"); }} style={{ paddingRight: 25 }}>
                       <Filter width={30} height={30} />
                     </TouchableOpacity>
                   );
+                } else if (screen.name === 'filter') {
+                  return null;
                 }
                 return null; // For other screens, no headerRight
               },

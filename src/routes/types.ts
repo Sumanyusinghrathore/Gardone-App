@@ -9,4 +9,6 @@ export type RootStackParamList = {
   Arrivals:{ name: string };
   ProductDetail:{ name: string };
   Search:{ name: string };
+  Filter:undefined;
+  Profile:undefined
 };

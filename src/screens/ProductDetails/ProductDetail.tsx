@@ -427,12 +427,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     padding: 0,
     paddingVertical: 10,
-    paddingBottom:90
+    paddingBottom:90,    
   },
   bannerimg: {
     height: 300,
     width: '100%',
     resizeMode: 'contain',
+    
   },
   wrapper: {
     height: 300,

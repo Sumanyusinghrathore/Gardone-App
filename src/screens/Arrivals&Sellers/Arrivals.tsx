@@ -1,9 +1,7 @@
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 import { COLORS, FONTS } from '../../themes/theme';
-import PlusIcon from '../../assets/Icons/PlusVector.svg';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
-import DynamicText from '../../components/CustomText/DynamicText';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -89,7 +87,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    padding: 5,
   },
   cardContainer: {
     width: screenWidth * 0.45, // Adjust width to fit 2 cards in a row
