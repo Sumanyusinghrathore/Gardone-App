@@ -3,13 +3,17 @@ import { View, Image, StyleSheet, FlatList, Dimensions, Text, TouchableOpacity, 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack'; // Import this
 import { RootStackParamList } from '../../routes/types';
+import { COLORS, FONTS } from "../../themes/theme";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { navigationStateType, useApp } from '../../context/AppContext';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
+
 const Onboarding = () => {
     const navigation = useNavigation<NavigationProp>();
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef<FlatList>(null);
-
+    const appContext = useApp();
     const { width, height } = Dimensions.get("window");
 
     const screens = [
@@ -55,8 +59,16 @@ const Onboarding = () => {
         }
     };
 
-    const handleLogin = () => {
-        console.log("Login button clicked!");
+    const Started = async () => {
+        try {
+            const dummyId = "12345";
+            await AsyncStorage.setItem('userData', JSON.stringify({ id: dummyId }));
+            console.log("Dummy ID saved:", dummyId);
+            appContext?.setNavigationState(navigationStateType.HOME);
+
+        } catch (error) {
+            console.error("Error saving data:", error);
+        }
     };
 
     const renderDot = (index: number) => {
@@ -82,7 +94,7 @@ const Onboarding = () => {
         if (currentIndex === 0) {
             return (
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={[styles.button, { left: 300, marginBottom: 20 }]} onPress={handleNext}>
+                    <TouchableOpacity style={[styles.button, { left: 355, marginBottom: 20 }]} onPress={handleNext}>
                         <Text style={styles.buttonText}>Skip</Text>
                     </TouchableOpacity>
                 </View>
@@ -106,15 +118,15 @@ const Onboarding = () => {
             return (
                 <View style={styles.buttonloginContainer}>
                     <View style={{ flexDirection: 'column' }}>
-                        <TouchableOpacity style={[styles.loginButton, { marginBottom: 20 }]} onPress={handleLogin}>
+                    <TouchableOpacity style={[styles.loginButton, { marginBottom: 20 }]} onPress={Started}>
                             <Text style={styles.buttonTextRight}>Get Started</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.textContainer}>
-                            Already have an account?{' '}
+                    </TouchableOpacity>
+                    <View style={styles.textContainer}>
+                            <Text style={styles.alreadytext}>Already have an account?{' '}</Text>
                             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                                 <Text style={styles.linkText}>Log in</Text>
                             </TouchableOpacity>
-                        </Text>
+                        </View>
                     </View>
                 </View>
             );
@@ -158,9 +170,8 @@ export default Onboarding;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#064e3b",
+        backgroundColor: "#154E3B",
         alignItems: "center",
-        marginHorizontal:10,
     },
     slide: {
         justifyContent: "center",
@@ -173,11 +184,12 @@ const styles = StyleSheet.create({
         position: "absolute",
     },
     text: {
-        color: "#fff",
-        fontSize: 26,
+        color: COLORS.white,
+        fontSize: 24,
         paddingHorizontal: 40,
         marginBottom: 600,
         textAlign: "center",
+        fontFamily:FONTS.AvenirDemi
     },
     dotContainer: {
         flexDirection: "row",
@@ -193,8 +205,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "80%",
-        marginTop: 20,
+        width: "100%",
+        marginTop: 15,
     },
     button: {
         paddingVertical: 10,
@@ -202,45 +214,54 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     buttonText: {
-        color: "#FFFFFF",
-        fontSize: 16,
+        color: COLORS.white,
+        fontSize: 14,
+        fontFamily:FONTS.AvenirDemi
     },
     buttonTextRight: {
-        color: "#154E3B",
+        color: COLORS.buttontext,
         fontSize: 20,
+        fontFamily:FONTS.AvenirDemi
     },
     rightButton: {
         position: "absolute",
         right: 0,
     },
     buttonloginContainer: {
-        width: '100%',
-        position: 'absolute',
-        bottom: 30
+        flexDirection: "row",
+        justifyContent: "space-between",
+        bottom:50
     },
     loginButton: {
-        backgroundColor: "#ffffff",
+        backgroundColor: COLORS.white,
         borderRadius: 5,
-        marginTop: 20,
         alignItems: "center",
         justifyContent: 'center',
         marginLeft: 'auto',
         marginRight: 'auto',
-        height: 50,
-        width: '80%',
+        height: 40,
+        width: '100%',
     },
     textContainer: {
         marginLeft: 'auto',
         marginRight: 'auto',
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 16,
         color: 'black',
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent:'center',
+        alignItems: 'center', // Ensures the text and button are vertically centered
+        justifyContent: 'center', // Centers the content horizontally
+        marginTop: 5, // Optional: Adjust the top margin if you need space above the text
+        marginBottom: 5, // Optional: Adjust the bottom margin if you need space below the text
+    },
+    alreadytext:{
+        fontSize: 14,
+        color: COLORS.white,
+        fontFamily:FONTS.AvenirDemi
     },
     linkText: {
-        fontSize: 20,
-        color: '#ffffff',
-    },
+        fontSize: 14,
+        color: COLORS.white,
+        fontFamily:FONTS.AvenirBold
+    }
 });

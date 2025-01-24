@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { COLORS, FONTS } from '../../themes/theme';
 import Profileicon from '../../assets/Icons/Profile.svg';
 import Rewards from '../../assets/Icons/Rewards.svg';
-import Address_Book from '../../assets/Icons/HomeActive.svg';
+import Home from '../../assets/Icons/iconoir_home.svg';
 import Order from '../../assets/Icons/Order_History.svg';
 import Changepassword from '../../assets/Icons/Change_Password.svg';
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,6 +15,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/types';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { navigationStateType, useApp } from '../../context/AppContext';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 const Profile = () => {
@@ -23,8 +25,23 @@ const Profile = () => {
   const customtoggleAccordion = (index: number) => {
     setcustomActiveAccordion(customactiveAccordion === index ? null : index);
   };
-
+  const appContext = useApp();
   const navigation = useNavigation<NavigationProp>();
+
+  const handleLogout = async () => {
+    try {
+      // Clear the user data from AsyncStorage
+      await AsyncStorage.removeItem('userData');
+      console.log("User data cleared from AsyncStorage");
+
+      // Update navigation state to AUTH
+      appContext?.setNavigationState(navigationStateType.AUTH);
+      console.log("Navigating to AUTH state");
+      
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
   
   return (
     <View style={styles.container}>
@@ -87,7 +104,7 @@ const Profile = () => {
               style={styles.gradientBorder}
             >
               <View style={styles.innerCard}>
-                <Address_Book width={30} height={30} />
+                <Home width={30} height={30} />
                 <View>
                   <Text style={styles.optionText}>Address Book</Text>
                   <Text style={styles.optionsubtext}>Manage your saved addresses</Text>
@@ -134,7 +151,7 @@ const Profile = () => {
           {/* Logout button */}
         </View>
         <View>
-          <TouchableOpacity  activeOpacity={ACTIVE_OPACITY} style={styles.logoutButton}>
+          <TouchableOpacity onPress={handleLogout}  activeOpacity={ACTIVE_OPACITY} style={styles.logoutButton}>
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
         </View>

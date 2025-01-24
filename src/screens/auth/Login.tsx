@@ -22,6 +22,7 @@ import { RootStackParamList } from '../../routes/types';
 import AppButton from '../../components/CustomButton/AppButton';
 import { navigationStateType, useApp } from '../../context/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomInput from '../../components/CustomInputs/Custominputs';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 const Login = () => {
@@ -67,6 +68,7 @@ const Login = () => {
                         rules={{ required: 'Email is required', pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email address' } }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
+                            
                                 style={[styles.input, errors.email && styles.inputError]}
                                 placeholder="Email"
                                 placeholderTextColor="#aaa"

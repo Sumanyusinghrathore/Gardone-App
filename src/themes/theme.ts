@@ -5,13 +5,6 @@ export const COLORS = {
   // base colors
   primary: '#18392A',
   secondary: '#D9D9D9',
-  jobColor: '#5097A4',
-  subscriptionColor: '#575082',
-  newLaunch: '#2F3C4F',
-  marketColor: '#1064d5',
-  coffeeColor: '#9F7934',
-  adminPrimary: '#FFAC12',
-  adminSecondary: '#F89500',
   gray: '#C2C2C2', // gray
   third: '#535252', // gray
   textColor: '#292626',
@@ -33,12 +26,14 @@ export const COLORS = {
   bordercolor2:"#C0DDB2",
   HeadingColor:'#002140',
   startcolor:"#EDD523",
+  buttontext:'#154E3B',
 
 
   lightGray: '#F5F5F6',
   lightGray2: '#DCDCDC',
   transparent: 'transparent',
   darkgray: '#898C95',
+  darkgreen:'#125938',
   opacity: '#f2f2f2',
   newColor: '#F4F5F7',
   lawngreen: '#00FF00',
@@ -99,7 +94,7 @@ export const FONTS = {
 
 export const REMOVESTRING = (value: number): string => {
   const numericValue = Number(value); // Ensure value is a number
-  return `${FONTS.rupeeSymbol}${numericValue.toFixed()}`; // Use numericValue
+  return `${FONTS.rupeeSymbol}${numericValue.toFixed(2)}`; // Format to 2 decimal places
 };
 
 const appTheme = {COLORS,FONTS,REMOVESTRING};

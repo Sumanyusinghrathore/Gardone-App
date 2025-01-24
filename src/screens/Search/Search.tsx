@@ -20,6 +20,7 @@ import Collapsible from 'react-native-collapsible';
 import { Divider } from '@rneui/themed';
 import Rightarrow from '../../assets/Icons/Rightarrow.svg';
 import Downarrow from '../../assets/Icons/Downarrow.svg';
+import DynamicText from '../../components/CustomText/DynamicText';
 
 const { width } = Dimensions.get('window');
 const screenWidth = Dimensions.get('window').width;
@@ -115,6 +116,7 @@ const Search = () => {
           <Mic style={styles.micIcon} />
         </TouchableOpacity>
       </View>
+      <DynamicText content="Trending Search" />
       {/* Accordion 1 */}
       <View style={styles.accodionmargin}>
           <TouchableOpacity
@@ -338,8 +340,8 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.AvenirDemi,
   },
   accodionmargin:{
-    marginVertical:20,
-    marginHorizontal:15
+    marginVertical:5,
+    marginHorizontal:20
   },
   header: {
     flexDirection: 'row',

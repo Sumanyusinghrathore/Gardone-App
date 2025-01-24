@@ -79,7 +79,7 @@ const Address = () => {
           addresses.map((address) => (
           <TouchableOpacity
             key={address.id}
-            activeOpacity={ACTIVE_OPACITY}
+            activeOpacity={1}
             onPress={() => handleSelectAddress(address.id)}
           >
             {selectedAddressId === address.id ? (

@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
 import { COLORS, FONTS } from '../../themes/theme';
 import CartScreen from '../Cart/Cart';
 import WishlistScreen from '../Wishlist/Wishlist';
@@ -16,12 +15,15 @@ import ServicesIconInactive from '../../assets/Icons/ServicesDeactive.svg';
 import Bottomnavigation from './Bottomnavigation';
 import { TouchableOpacity } from 'react-native';
 import Icnicons from '../../assets/Icons/Leftarrow.svg';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../routes/types';
+import { useNavigation } from '@react-navigation/native';
 
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-  const navigation = useNavigation();
-
+ const navigation = useNavigation<NavigationProp>();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -89,8 +91,29 @@ const TabNavigation = () => {
         name="Cart"
         component={CartScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
           tabBarShowLabel: false,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: COLORS.white,
+            elevation: 0, // Hide shadow on Android
+            shadowOpacity: 0, // Hide shadow on iOS
+          },
+          headerTitleStyle: {
+            fontFamily: FONTS.AvenirBold,
+            color: COLORS.header,
+            fontSize: 20,
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 25 }}>
+              <Icnicons color="white" />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Wishlist' as never)} style={{ paddingRight: 25 }}>
+        <WishlistIconInactive width={30} height={30} />
+      </TouchableOpacity>
+          ),
           tabBarIcon: ({ focused, size }) =>
             focused ? (
               <CartIconActive height={80} />
@@ -103,8 +126,25 @@ const TabNavigation = () => {
         name="Services"
         component={ServicesScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
           tabBarShowLabel: false,
+          headerTitleAlign: 'center',
+          headerTitle:'Maintenance',
+          headerStyle: {
+            backgroundColor: COLORS.MoodyBlue,
+            elevation: 0, // Hide shadow on Android
+            shadowOpacity: 0, // Hide shadow on iOS
+          },
+          headerTitleStyle: {
+            fontFamily: FONTS.AvenirBold,
+            color: COLORS.header,
+            fontSize: 20,
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 25 }}>
+              <Icnicons color="white" />
+            </TouchableOpacity>
+          ),
           tabBarIcon: ({ focused, size }) =>
             focused ? (
               <ServicesIconActive height={80} />

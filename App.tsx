@@ -12,7 +12,7 @@ const App = (): React.JSX.Element => {
 
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView>
       <AppContext>
         <MainStack />
       </AppContext>
