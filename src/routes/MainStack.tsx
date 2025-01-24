@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useApp, navigationStateType } from '../context/AppContext';

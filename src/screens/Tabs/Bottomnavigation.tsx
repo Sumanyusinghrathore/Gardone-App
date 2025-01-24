@@ -8,6 +8,7 @@ import { COLORS, FONTS } from '../../themes/theme';
 import Arrivals from '../Arrivals&Sellers/Arrivals';
 import Search from '../Search/Search';
 import Filter from '../../assets/Icons/FilterSvg.svg'; // Import Wishlist SVG
+import Profile from '../Profile/Profile';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,15 @@ export const screens = [
   { name: 'Categorie', component: Categorie, options: headerOptions(COLORS.white) },
   { name: 'Arrivals', component: Arrivals, options: headerOptions(COLORS.white) },
   { name: 'Search', component: Search, options: headerOptions(COLORS.white) },
+  {
+      name: 'Profile',
+      component: Profile,
+      options: {
+        ...headerOptions(COLORS.white),
+        headerTitle: 'My Profile', // Set the custom header name here
+      },
+    },
+  
 ];
 
 const App = () => {
@@ -64,9 +74,7 @@ const App = () => {
                       <Filter width={30} height={30} />
                     </TouchableOpacity>
                   );
-                } else if (screen.name === 'filter') {
-                  return null;
-                }
+                } 
                 return null; // For other screens, no headerRight
               },
             };

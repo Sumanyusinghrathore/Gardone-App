@@ -218,7 +218,6 @@ const Search = () => {
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={styles.flatListContent}
       />
       </View>
     </View>
@@ -267,9 +266,6 @@ const styles = StyleSheet.create({
   micIcon: {
     width: width * 0.05,
     height: width * 0.05,
-  },
-  flatListContent: {
-    paddingHorizontal: 10,
   },
   cardContainer: {
     width: screenWidth * 0.45,

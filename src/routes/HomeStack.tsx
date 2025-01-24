@@ -5,10 +5,14 @@ import { TouchableOpacity } from 'react-native';
 import Leftarrow from '../assets/Icons/Leftarrow.svg';
 import Wishlist from '../assets/Icons/WishlistDeactive.svg';
 import { COLORS, FONTS } from '../themes/theme';
-import Profile from '../screens/Profile/Profile';
 import Filter from '../screens/Filter/Filterscreen';
-import Filtericon from '../assets/Icons/FilterSvg.svg'
 import { createStackNavigator } from '@react-navigation/stack';
+import Address from '../screens/Address_Book/Address';
+import Updateprofile from '../screens/Update_profile/Updateprofile';
+import Rewards from '../screens/Rewards/Rewards';
+import OrderHistory from '../screens/Order_History/OrderHistory';
+import Changepassword from '../screens/Change_Password/Changepassword';
+import AddAddress from '../screens/Add_Address/AddAddress';
 
 const Stack = createStackNavigator();
 
@@ -24,20 +28,36 @@ const headerOptions = (bg: string) => ({
 export const screens = [
   { name: 'Home', component: TabNavigation, options: { headerShown: false } },
   { name: 'ProductDetail', component: ProductDetail, options: headerOptions(COLORS.white) },
-  {
-    name: 'Profile',
-    component: Profile,
-    options: {
-      ...headerOptions(COLORS.white),
-      headerTitle: 'My Profile', // Set the custom header name here
-    },
-  },
   { name: 'Filter', component: Filter, options: headerOptions(COLORS.white) },
+  { name: 'Address',  component: Address, options: {
+          ...headerOptions(COLORS.white),
+          headerTitle: 'Address Book', // Set the custom header name here
+        }, },
+  { name: 'UpdateProfile', component: Updateprofile, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Update Profile', // Set the custom header name here
+  }, },
+  { name: 'Rewards', component: Rewards, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Rewards', // Set the custom header name here
+  }, },
+  { name: 'OrderHistory', component: OrderHistory, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Order History', // Set the custom header name here
+  }, },
+  { name: 'Changepassword', component: Changepassword, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Change Password', // Set the custom header name here
+  }, },
+  { name: 'AddAddress',  component: AddAddress, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Add Address', // Set the custom header name here
+  }, },
 ];
 
 const App = () => {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, gestureDirection: 'horizontal' }}>
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false ,gestureDirection:'horizontal' }}>
       {screens.map((screen, index) => (
         <Stack.Screen
           key={index}

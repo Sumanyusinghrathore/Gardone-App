@@ -10,5 +10,11 @@ export type RootStackParamList = {
   ProductDetail:{ name: string };
   Search:{ name: string };
   Filter:undefined;
-  Profile:undefined
+  Profile:undefined;
+  Address:undefined;
+  UpdateProfile:undefined;
+  Rewards:undefined;
+  OrderHistory:undefined;
+  Changepassword:undefined;
+  AddAddress:undefined
 };
