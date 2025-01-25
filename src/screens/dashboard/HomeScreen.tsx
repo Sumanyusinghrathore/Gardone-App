@@ -126,7 +126,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity activeOpacity={ACTIVE_OPACITY}>
+          <TouchableOpacity onPress={() => navigation.navigate("Notifications")} activeOpacity={ACTIVE_OPACITY}>
             <FontAwesome name="bell" size={width * 0.06} color="black" style={styles.notificationIcon} />
           </TouchableOpacity>
         </View>
@@ -312,12 +312,13 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   verticalpadding: {
-    paddingVertical: 50
+    paddingVertical: 10
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: width * 0.04,
+    paddingTop:50
   },
   profileImage: {
     width: width * 0.12,
@@ -421,15 +422,13 @@ const styles = StyleSheet.create({
   },
   categoryCard: {
     alignItems: 'center',
-    height: 180,
-    textAlign: 'center'
+    height: "100%",
+    marginHorizontal:0,
   },
   categoryImage: {
-    height: 150, // Maintain aspect ratio for images
-    borderRadius: width * 0.075,
-    marginBottom: width * 0.02,
+    height: 190, // Maintain aspect ratio for images
     objectFit: 'contain',
-    width: '100%'
+    width: '90%',
   },
   categoryText: {
     fontSize: 20,
@@ -535,7 +534,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 20,
     padding: 2,
-    marginVertical:20,
+    marginVertical:10,
     marginLeft:10
   },
   testimonial: {

@@ -17,4 +17,8 @@ export type RootStackParamList = {
   OrderHistory:undefined;
   Changepassword:undefined;
   AddAddress: undefined;
+  MaintenanceForm:undefined;
+  Notifications:undefined;
+  OrderSummary:undefined;
+  Payment:undefined;
 };

@@ -23,7 +23,7 @@ type NavigationProp = StackNavigationProp<RootStackParamList>;
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
- const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation<NavigationProp>();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,11 +34,16 @@ const TabNavigation = () => {
           marginTop: 0,
         },
         tabBarStyle: {
-          height: 80,
-          paddingTop: 0,
-          elevation: 0,
-          marginBottom: 5,
-          backgroundColor: COLORS.white,
+      height: 80,
+      paddingTop: 0,
+      elevation: 0, // Removes default Android shadow
+      marginBottom: 0,
+      backgroundColor: COLORS.white, // Make the background transparent
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderWidth:1,
+      borderColor:COLORS.gray,
+      marginVertical:-10
         },
       }}
     >
@@ -111,8 +116,8 @@ const TabNavigation = () => {
           ),
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Wishlist' as never)} style={{ paddingRight: 25 }}>
-        <WishlistIconInactive width={30} height={30} />
-      </TouchableOpacity>
+              <WishlistIconInactive width={30} height={30} />
+            </TouchableOpacity>
           ),
           tabBarIcon: ({ focused, size }) =>
             focused ? (
@@ -129,7 +134,7 @@ const TabNavigation = () => {
           headerShown: true,
           tabBarShowLabel: false,
           headerTitleAlign: 'center',
-          headerTitle:'Maintenance',
+          headerTitle: 'Maintenance',
           headerStyle: {
             backgroundColor: COLORS.MoodyBlue,
             elevation: 0, // Hide shadow on Android

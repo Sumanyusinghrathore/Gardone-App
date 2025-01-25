@@ -207,6 +207,7 @@ const Cart = () => {
         <TouchableOpacity
           style={styles.payButton}
           activeOpacity={ACTIVE_OPACITY}
+          onPress={() => navigation.navigate("OrderSummary")}
         >
           <Text style={styles.payButtonText}>
             Proceed to Pay
@@ -443,8 +444,8 @@ const styles = StyleSheet.create({
   },
   payButton: {
     backgroundColor: COLORS.primary,
-    borderRadius: 8,
-    paddingVertical: 10,
+    borderRadius: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     alignItems: 'center', // Centers the content horizontally
     justifyContent: 'center', // Centers the content vertically

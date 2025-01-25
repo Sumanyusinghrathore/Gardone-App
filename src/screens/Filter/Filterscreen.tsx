@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.AvenirDemi,
   },
   dividercontainer:{
-      borderColor: COLORS.HeadingColor, 
+      borderColor: COLORS.MoodyBlue, 
       borderWidth: 0.5, // Adjust thickness
       marginVertical: 10, // Adds padding (top and bottom)
       marginHorizontal:20

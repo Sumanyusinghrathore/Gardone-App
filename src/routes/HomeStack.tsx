@@ -4,6 +4,7 @@ import ProductDetail from '../screens/ProductDetails/ProductDetail';
 import { TouchableOpacity } from 'react-native';
 import Leftarrow from '../assets/Icons/Leftarrow.svg';
 import Wishlist from '../assets/Icons/WishlistDeactive.svg';
+import Message from '../assets/Icons/Message_icon.svg';
 import { COLORS, FONTS } from '../themes/theme';
 import Filter from '../screens/Filter/Filterscreen';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +14,9 @@ import Rewards from '../screens/Rewards/Rewards';
 import OrderHistory from '../screens/Order_History/OrderHistory';
 import Changepassword from '../screens/Change_Password/Changepassword';
 import AddAddress from '../screens/Add_Address/AddAddress';
+import MaintenanceForm from '../screens/MaintenanceForm/MaintenanceForm';
+import OrderSummary from '../screens/OrderSummary/OrderSummary';
+import Payment from '../screens/Payment/Payment';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +57,18 @@ export const screens = [
     ...headerOptions(COLORS.white),
     headerTitle: 'Add Address', // Set the custom header name here
   }, },
+  { name: 'MaintenanceForm',  component: MaintenanceForm, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Form', // Set the custom header name here
+  }, },
+  { name: 'OrderSummary',  component: OrderSummary, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Order Summary', // Set the custom header name here
+  }, },
+  { name: 'Payment',  component: Payment, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Payment', // Set the custom header name here
+  }, },
 ];
 
 const App = () => {
@@ -89,7 +105,11 @@ const App = () => {
                 <TouchableOpacity onPress={() => console.log('Save Wishlist')} style={{ paddingRight: 25 }}>
                   <Wishlist />
                 </TouchableOpacity>
-              ) : undefined, // Only show wishlist icon on ProductDetail screen
+              ) : screen.name === 'MaintenanceForm' ? () => (
+                <TouchableOpacity onPress={() => console.log('Messageicon')} style={{ paddingRight: 25 }}>
+                  <Message />
+                </TouchableOpacity>
+              ): undefined, // Only show wishlist icon on ProductDetail screen
             };
           }}
         />

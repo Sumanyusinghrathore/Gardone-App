@@ -9,6 +9,7 @@ import Arrivals from '../Arrivals&Sellers/Arrivals';
 import Search from '../Search/Search';
 import Filter from '../../assets/Icons/FilterSvg.svg'; // Import Wishlist SVG
 import Profile from '../Profile/Profile';
+import Notifications from '../Notifications/Notifications';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export const screens = [
   { name: 'Categorie', component: Categorie, options: headerOptions(COLORS.white) },
   { name: 'Arrivals', component: Arrivals, options: headerOptions(COLORS.white) },
   { name: 'Search', component: Search, options: headerOptions(COLORS.white) },
+  { name: 'Notifications', component: Notifications, options: headerOptions(COLORS.white) },
   {
       name: 'Profile',
       component: Profile,

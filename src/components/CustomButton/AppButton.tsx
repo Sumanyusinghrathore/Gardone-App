@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, ViewStyle, TextStyle, StyleProp } from 'react-native';
-import { COLORS } from '../../themes/theme';
+import { COLORS, FONTS } from '../../themes/theme';
+import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 
 interface AppButtonProps {
     disabledTitleStyle?: StyleProp<TextStyle>;
@@ -40,7 +41,7 @@ const AppButton: React.FC<AppButtonProps> = ({
             ]}
             onPress={onPress}
             disabled={disabled || loading}
-            activeOpacity={0.7}
+            activeOpacity={ACTIVE_OPACITY}
         >
             {loading ? (
                 <Text style={[styles.registerButtonText, disabledTitleStyle]}>Loading...</Text>
@@ -57,18 +58,21 @@ export default AppButton;
 
 const styles = StyleSheet.create({
     registerButton: {
-        width: '100%',
+        width: '95%',
         height: 50,
         backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 12,
-        marginBottom: 20,
+        borderRadius: 10,
+        marginVertical:5,
+        marginLeft:'auto',
+        marginRight:'auto'
+        
     },
     registerButtonText: {
         color: COLORS.white,
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily:FONTS.AvenirBold,
     },
     disabledButton: {
         backgroundColor: COLORS.gray, // Adjust based on the disabled state
