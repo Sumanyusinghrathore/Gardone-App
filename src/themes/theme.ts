@@ -12,7 +12,6 @@ export const COLORS = {
   inputBg: '#EFFBFF',
   newGray: '#9C9797',
   textGray: '#505050',
-  btngray:'#18392A',
   // colors
   black: '#323643',
   black2: '#303030',

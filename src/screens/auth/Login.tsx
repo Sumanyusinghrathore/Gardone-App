@@ -101,7 +101,7 @@ const Login = () => {
                                     <FontAwesome
                                         name={isPasswordVisible ? 'eye-slash' : 'eye'}
                                         size={20}
-                                        color={COLORS.btngray} // You can adjust the color based on your theme
+                                        color={COLORS.primary} // You can adjust the color based on your theme
                                         style={styles.togglePasswordVisibility}
                                     />
                                 </TouchableOpacity>
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     loginButton: {
         width: '100%',
         height: 50,
-        backgroundColor: COLORS.btngray,
+        backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 12,
@@ -317,6 +317,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 15,
         paddingTop: 10,
-        color: COLORS.btngray,
+        color: COLORS.primary,
     },
 });

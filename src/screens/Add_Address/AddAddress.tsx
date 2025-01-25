@@ -65,7 +65,7 @@ const AddAddress = () => {
 
             // Reset form and navigate back
             reset();
-            navigation.navigate("Address"); // Replace "Address" with the correct screen name
+            navigation.goBack();  // Replace "Address" with the correct screen name
         } catch (e) {
             console.error("Error saving address data:", e);
             Alert.alert("Error", "Failed to save the address. Please try again.");

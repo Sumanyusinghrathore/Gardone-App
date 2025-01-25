@@ -16,5 +16,5 @@ export type RootStackParamList = {
   Rewards:undefined;
   OrderHistory:undefined;
   Changepassword:undefined;
-  AddAddress:undefined
+  AddAddress: undefined;
 };

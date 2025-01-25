@@ -125,7 +125,7 @@ const Register = () => {
                                             <FontAwesome
                                                 name={isPasswordVisible ? 'eye-slash' : 'eye'} // Change between eye and eye-slash
                                                 size={20}
-                                                color={COLORS.btngray} // You can adjust the color based on your theme
+                                                color={COLORS.primary} // You can adjust the color based on your theme
                                                 style={styles.togglePasswordVisibility}
                                             />
                                         </TouchableOpacity>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 15,
         paddingTop: 10,
-        color: COLORS.btngray,
+        color: COLORS.primary,
     },
     loginRedirectContainer: {
         flexDirection: 'row',

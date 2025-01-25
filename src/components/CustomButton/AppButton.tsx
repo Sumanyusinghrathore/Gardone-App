@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     registerButton: {
         width: '100%',
         height: 50,
-        backgroundColor: COLORS.btngray,
+        backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 12,
