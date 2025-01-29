@@ -17,6 +17,7 @@ import AddAddress from '../screens/Add_Address/AddAddress';
 import MaintenanceForm from '../screens/MaintenanceForm/MaintenanceForm';
 import OrderSummary from '../screens/OrderSummary/OrderSummary';
 import Payment from '../screens/Payment/Payment';
+import OrderConfirmed from '../screens/OrderConfirmed/OrderConfirmed';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +70,7 @@ export const screens = [
     ...headerOptions(COLORS.white),
     headerTitle: 'Payment', // Set the custom header name here
   }, },
+  { name: 'OrderConfirmed',  component: OrderConfirmed, options: { headerShown: false } },
 ];
 
 const App = () => {

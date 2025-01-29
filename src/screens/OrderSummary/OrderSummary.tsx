@@ -26,7 +26,7 @@ const OrderSummary = () => {
                         <Text style={styles.heading}>India</Text>
                         <Text style={styles.heading}>9876543201</Text>
                     </View>
-                    <TouchableOpacity activeOpacity={ACTIVE_OPACITY}>
+                    <TouchableOpacity onPress={()=> navigation.navigate("AddAddress")} activeOpacity={ACTIVE_OPACITY}>
                         <View style={styles.addressBorder}>
                             <View style={styles.addresscard}>
                                 <Text style={styles.addAddressText}>Change Or Add Address</Text>

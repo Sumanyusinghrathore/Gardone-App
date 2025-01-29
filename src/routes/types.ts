@@ -21,4 +21,5 @@ export type RootStackParamList = {
   Notifications:undefined;
   OrderSummary:undefined;
   Payment:undefined;
+  OrderConfirmed:undefined;
 };

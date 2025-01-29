@@ -288,9 +288,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingVertical:15
   },
   profileContainer: {
-    marginTop: 20,
     paddingHorizontal: 20,
   },
   profileDetails: {
