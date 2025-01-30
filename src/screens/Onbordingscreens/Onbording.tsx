@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { View, Image, StyleSheet, FlatList, Dimensions, Text, TouchableOpacity, StatusBar } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack'; // Import this
+import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/types';
 import { COLORS, FONTS } from "../../themes/theme";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,7 +14,7 @@ const Onboarding = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef<FlatList>(null);
     const appContext = useApp();
-    const { width, height } = Dimensions.get("window");
+    const { width } = Dimensions.get("window");
 
     const screens = [
         {
@@ -82,7 +82,7 @@ const Onboarding = () => {
                 style={[
                     styles.dot,
                     {
-                        backgroundColor: index === currentIndex ? "#fff" : "#bbb",
+                        backgroundColor: index === currentIndex ? COLORS.white : COLORS.gray,
                         width: index === currentIndex ? 30 : 10,
                     },
                 ]}
