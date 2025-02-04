@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { COLORS, FONTS } from '../../themes/theme'
+import { COLORS, FONTS, SIZES } from '../../themes/theme'
 import { ACTIVE_OPACITY } from '../../themes/genericStyles'
 import { Divider } from '@rneui/themed'
 import Rightarrow from '../../assets/Icons/Rightcoupanicon.svg';
@@ -96,19 +96,19 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white
     },
     heading: {
-        fontSize: 18,
+        fontSize: SIZES.h4,
         color: COLORS.HeadingColor,
         fontFamily: FONTS.AvenirRegular,
         marginVertical: 3
     },
     Mainheading: {
-        fontSize: 20,
+        fontSize: SIZES.h4,
         color: COLORS.HeadingColor,
         fontFamily: FONTS.AvenirBold,
         marginVertical: 3
     },
     name: {
-        fontSize: 20,
+        fontSize: SIZES.h4,
         color: COLORS.HeadingColor,
         fontFamily: FONTS.AvenirBold
     },
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     },
     addAddressText: {
         color: COLORS.black,
-        fontSize: 18,  // Adjusted font size to fit well in button area
+        fontSize: SIZES.h4, // Adjusted font size to fit well in button area
         fontFamily: FONTS.AvenirBold,
         textAlign: 'center', // Ensure text is centered in the button
     },
@@ -165,32 +165,29 @@ const styles = StyleSheet.create({
         marginHorizontal: -15
     },
     priceRow: {
-        fontSize: 14,
-        fontFamily: FONTS.AvenirDemi,
-        color: COLORS.black,
         marginVertical: 10,
         flexDirection: 'row', // Aligns text and price in a row
         justifyContent: 'space-between', // Ensures space between the text and price
         alignItems: 'center',
     },
     priceText: {
-        fontSize: 16,
+        fontSize: SIZES.body4,
         fontFamily: FONTS.AvenirDemi,
         color: COLORS.header,
     },
     price: {
-        fontSize: 14,
+        fontSize: SIZES.body4,
         color: COLORS.HeadingColor,
         fontFamily: FONTS.AvenirDemi,
         marginVertical: 5
     },
     finalpricetext: {
-        fontSize: 18,
+        fontSize: SIZES.body3,
         fontFamily: FONTS.AvenirBold,
         color: COLORS.header,
     },
     finalPrice: {
-        fontSize: 18,
+        fontSize: SIZES.body3,
         fontFamily: FONTS.AvenirBold,
         color: COLORS.header,
     },
@@ -210,12 +207,12 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     couponText: {
-        fontSize: 16,
+        fontSize: SIZES.body3,
         fontFamily: FONTS.AvenirBold,
         color: COLORS.header,
     },
     couponLink: {
-        fontSize: 12,
+        fontSize: SIZES.body3,
         fontFamily: FONTS.AvenirMedium,
         color: COLORS.header,
     },

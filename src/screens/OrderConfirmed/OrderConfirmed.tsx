@@ -1,10 +1,30 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Orderconfirm from '../../assets/Icons/Order_Confirmed.svg';
-import { COLORS } from '../../themes/theme';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../routes/types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
+type tabNavigation = BottomTabNavigationProp<RootStackParamList>;
 
 const OrderConfirmed = () => {
+   const navigation = useNavigation<NavigationProp>();
+   const tabNavigation = useNavigation<tabNavigation>();
+
+   const ContinueShopping =  () => {
+    navigation.navigate('HomeScreen'); 
+   }
+
+   const handleTrackOrder = () => {
+    // Ensure Cart tab stays active and navigate to Track page
+    tabNavigation.navigate('Cart');// Navigate to the Cart tab if needed
+    navigation.navigate('Track'); // Then navigate to the Track page
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -19,11 +39,11 @@ const OrderConfirmed = () => {
 
         {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.continueShoppingButton}>
-            <Text style={styles.buttonText}>Continue Shopping</Text>
+          <TouchableOpacity onPress={handleTrackOrder} style={styles.continueShoppingButton}>
+            <Text style={styles.shoppingText}>Track Order</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.trackOrderButton}>
-            <Text style={styles.buttonText}>Track Order</Text>
+          <TouchableOpacity onPress={ContinueShopping} style={styles.trackOrderButton}>
+            <Text style={styles.buttonText}>Continue Shopping </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -50,14 +70,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: COLORS.black,
+    fontSize: SIZES.h1,
+    color: COLORS.HeadingColor,
     marginTop: 20,
   },
   description: {
-    fontSize: 16,
-    color: COLORS.gray,
+    fontSize: SIZES.h4,
+    color: COLORS.black,
     textAlign: 'center',
     marginTop: 10,
     paddingHorizontal: 20,
@@ -74,16 +93,23 @@ const styles = StyleSheet.create({
     marginVertical:10
   },
   continueShoppingButton: {
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.white,
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: 'center',
     width: '100%',
-    marginVertical:10
+    marginVertical:10,
+    borderColor:COLORS.HeadingColor,
+    borderWidth:1
   },
   buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize:SIZES.body4,
     color: COLORS.white,
+    fontFamily:FONTS.AvenirDemi
   },
+  shoppingText:{
+    color:COLORS.HeadingColor,
+    fontFamily:FONTS.AvenirDemi,
+    fontSize:SIZES.body4,
+  }
 });

@@ -4,6 +4,7 @@ export type RootStackParamList = {
   Onboarding: undefined; // Fixed spelling from 'Onbording'
   Signup: undefined;
   Home: undefined;
+  HomeScreen:undefined;
   TabNavigation: undefined;
   Categorie: { name: string }; // Allows optional parameter for category name
   Arrivals:{ name: string };
@@ -22,4 +23,7 @@ export type RootStackParamList = {
   OrderSummary:undefined;
   Payment:undefined;
   OrderConfirmed:undefined;
+  Track:undefined;
+  Cart:undefined;
+  MainProfile:undefined
 };

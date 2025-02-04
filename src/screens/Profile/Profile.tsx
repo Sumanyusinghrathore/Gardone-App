@@ -49,7 +49,7 @@ const Profile = () => {
         {/* Profile section */}
         <View style={styles.profileContainer}>
           <View style={styles.profileDetails}>
-            <Image source={require('../../assets/Images/Profile.png')} style={styles.profileImage} />
+            <Image source={require('../../assets/Images/Profile.jpg')} style={styles.profileImage} />
             <View style={styles.textContainer}>
               <Text style={styles.userName}>Hello Sumanyu Singh Rathore</Text>
               <Text style={styles.email}>xyz14@gmail.com</Text>
@@ -60,7 +60,7 @@ const Profile = () => {
         {/* Profile options with linear gradient borders */}
         <View style={styles.optionsContainer}>
           {/* Profile Option */}
-          <TouchableOpacity onPress={() => navigation.navigate("UpdateProfile")} activeOpacity={ACTIVE_OPACITY} style={styles.optionItem}>
+          <TouchableOpacity onPress={() => navigation.navigate("MainProfile")} activeOpacity={ACTIVE_OPACITY} style={styles.optionItem}>
             <LinearGradient
               colors={['#ADB815', '#18392A']}
               start={{ x: 0, y: 0 }}  // Start at the top
@@ -306,16 +306,19 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: 'column',
+    flexShrink: 1,
   },
   userName: {
     fontSize: 16,
     color: COLORS.black,
-    fontFamily:FONTS.AvenirBold
+    fontFamily:FONTS.AvenirBold,
+    flexShrink: 1,
   },
   email: {
     fontSize: 14,
     color: COLORS.black,
-    fontFamily:FONTS.AvenirRegular
+    fontFamily:FONTS.AvenirRegular,
+    flexShrink: 1,
   },
   optionsContainer: {
     marginTop: 30,

@@ -6,9 +6,10 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { COLORS, FONTS, REMOVESTRING } from '../../themes/theme';
+import { COLORS, FONTS, REMOVESTRING, SIZES } from '../../themes/theme';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 import DeleteIcon from '../../assets/Icons/delete-outline.svg';
 import { useNavigation } from '@react-navigation/native';
@@ -233,11 +234,11 @@ const Cart = () => {
 };
 
 export default Cart;
-
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
-    paddingHorizontal: 10,
+    paddingHorizontal: 7,
     paddingVertical: 20
   },
   addAddressButton: {
@@ -281,11 +282,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 120,
-    height: 120,
+    width: width * 0.3, // 30% of screen width
+    height: width * 0.2,
     borderRadius: 5,
     marginRight: 15,
-    resizeMode: 'cover',
+    resizeMode:'center'
   },
   textContainer: {
     flex: 1,
@@ -307,7 +308,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirDemi,
-    marginVertical: 5
+    marginVertical: 3
   },
   deleteButton: {
     alignItems: 'center',
@@ -317,10 +318,10 @@ const styles = StyleSheet.create({
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20
+    marginHorizontal: 5
   },
   quantityLabel: {
-    fontSize: 14,
+    fontSize: SIZES.body4,
     color: COLORS.HeadingColor,
     marginRight: 5,
     fontFamily: FONTS.AvenirDemi,
@@ -328,29 +329,29 @@ const styles = StyleSheet.create({
   quantityBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.white, // Ensure the inside has a solid color
+    backgroundColor: COLORS.white,
     borderRadius: 5,
     overflow: 'hidden',
   },
   gradientBorder: {
-    borderRadius: 5, // Matches the `quantityBox` radius
-    padding: 2, // Adds space for the gradient effect
+    borderRadius: 5,
+    padding: 2,
   },
   button: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirBold,
-    fontSize: 20
+    fontSize: 16
   },
   quantityText: {
-    width: 40,
+    width: 35,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 14,
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirBold,
     backgroundColor: COLORS.white,
@@ -400,8 +401,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   priceRow: {
-    fontSize: 14,
-    fontFamily: FONTS.AvenirDemi,
     color: COLORS.black,
     marginVertical: 10,
     flexDirection: 'row', // Aligns text and price in a row
@@ -409,18 +408,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   priceText: {
-    fontSize: 16,
+    fontSize: SIZES.body5,
     fontFamily: FONTS.AvenirDemi,
     color: COLORS.header,
   },
   finalpricetext: {
-    fontSize: 18,
+    fontSize: SIZES.body4,
     fontFamily: FONTS.AvenirBold,
     color: COLORS.header,
   },
   finalPrice: {
-    fontSize: 18,
-    fontFamily: FONTS.AvenirBold,
+    fontSize: SIZES.body4,
+    fontFamily: FONTS.AvenirDemi,
     color: COLORS.header,
   },
   footer: {
@@ -437,7 +436,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   grandTotal: {
-    fontSize: 18,
+    fontSize: SIZES.body3,
     fontFamily: FONTS.AvenirBold,
     color: COLORS.black,
     marginVertical: 5
@@ -451,7 +450,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // Centers the content vertically
   },
   payButtonText: {
-    fontSize: 16,
+    fontSize: SIZES.h4,
     fontFamily: FONTS.AvenirBold,
     color: COLORS.white,
     textAlign: 'center',

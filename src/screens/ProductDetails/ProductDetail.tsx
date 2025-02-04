@@ -1,6 +1,6 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import React, { useState } from 'react';
-import { COLORS, FONTS, REMOVESTRING } from '../../themes/theme';
+import { COLORS, FONTS, REMOVESTRING, SIZES } from '../../themes/theme';
 import Swiper from 'react-native-swiper';
 import Star from '../../assets/Icons/Star.svg';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -15,7 +15,11 @@ import Copy from '../../assets/Icons/copyicon.svg';
 import Share from '../../assets/Icons/Shareicon.svg';
 import DynamicText from '../../components/CustomText/DynamicText';
 import Card from '../../components/Arrivals&Sellers/Card';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../routes/types';
+import { StackNavigationProp } from '@react-navigation/stack';
 
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
@@ -23,11 +27,10 @@ const ProductDetail = () => {
   const [selectedAge, setSelectedAge] = useState('');
   const [activeAccordion, setActiveAccordion] = useState<null | number>(null);
   const [customactiveAccordion, setcustomActiveAccordion] = useState<number | null>(null);
-
   const toggleAccordion = (index: number) => {
     setActiveAccordion(prev => (prev === index ? null : index));
   };
-
+  const navigation = useNavigation<NavigationProp>();
   const customtoggleAccordion = (index: number) => {
     setcustomActiveAccordion(customactiveAccordion === index ? null : index);
   };
@@ -38,7 +41,8 @@ const ProductDetail = () => {
   const formattedQuantity = quantity.toString().padStart(2, '0');
   const originalPrice = 1999.0;
   const discountedPrice = 499.0;
-
+  const { width, height } = Dimensions.get('window');
+  
   const discountPercentage = Math.round(
     ((originalPrice - discountedPrice) / originalPrice) * 100
   );
@@ -407,10 +411,10 @@ const ProductDetail = () => {
     </View>
       </ScrollView>
       <View style={styles.bottomContainer}>
-      <TouchableOpacity style={styles.buyNowButton} onPress={() => console.log('Buy Now pressed')}>
+      <TouchableOpacity style={styles.buyNowButton} onPress={() => (navigation.navigate("Cart"))}>
         <Text style={styles.buyNowText}>Buy Now</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.addToCartButton} onPress={() => console.log('Add to Cart pressed')}>
+      <TouchableOpacity style={styles.addToCartButton} onPress={() => (navigation.navigate("Cart"))}>
         <Text style={styles.addToCartText}>Add To Cart</Text>
       </TouchableOpacity>
     </View>
@@ -420,6 +424,8 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -491,13 +497,13 @@ const styles = StyleSheet.create({
   },
 
   Header: {
-    fontSize: 24,
+    fontSize: SIZES.h3,
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirBold,
     marginVertical: 10,
   },
   heading: {
-    fontSize: 16,
+    fontSize: SIZES.body3,
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirDemi,
     marginTop: 20,
@@ -510,7 +516,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 15,
-    width: 250
+    width: 'auto'
   },
   planterButton: {
     flex: 1,
@@ -528,7 +534,7 @@ const styles = StyleSheet.create({
   },
   planterButtonText: {
     color: COLORS.black,
-    fontSize: 16,
+    fontSize: SIZES.h4,
   },
   selectedButtonText: {
     color: COLORS.white,
@@ -537,7 +543,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 10,
-    width: 300
+    width: 'auto'
   },
   ageButton: {
     flex: 1,
@@ -549,7 +555,7 @@ const styles = StyleSheet.create({
   },
   ageButtonText: {
     color: COLORS.black,
-    fontSize: 16,
+    fontSize: SIZES.h4,
   },
   quantityContainer: {
     flexDirection: 'row',
@@ -574,7 +580,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   headerText: {
-    fontSize: 18,
+    fontSize: SIZES.body3,
     color: COLORS.black,
     fontFamily:FONTS.AvenirBold
   },
@@ -584,7 +590,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:5
   },
   contentText: {
-    fontSize: 14,
+    fontSize: SIZES.h4,
     color: COLORS.black,
     lineHeight: 24,
     fontFamily:FONTS.AvenirRegular,
@@ -601,12 +607,13 @@ const styles = StyleSheet.create({
     marginVertical: 25
   },
   cardAvatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 25,
+    width: width * 0.2, // Makes image responsive (20% of screen width)
+    height: width * 0.2, // Keep it square
+    borderRadius: (width * 0.2) / 2, // Circular image
     position: 'absolute',
     bottom: "80%",
-    right: "90%",
+    right: "88%",
+    objectFit:'cover'
   },
   cardRightContent: {
     flex: 1, // Allows the right-side content to take up available space

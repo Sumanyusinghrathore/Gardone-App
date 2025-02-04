@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Select from '../../assets/Icons/Select_circle.svg';
 import UnSelect from '../../assets/Icons/Unselect_circle.svg';
-import { COLORS, FONTS } from '../../themes/theme';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 import AppButton from '../../components/CustomButton/AppButton';
 import Creditcard from '../../assets/Icons/CreditDebitCard.svg'
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     },
     heading: {
-        fontSize: 18,
+        fontSize: SIZES.body3,
         color: COLORS.HeadingColor,
         fontFamily: FONTS.AvenirBold,
         marginVertical: 10
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     optionLabel: {
         flex: 1,
         marginLeft: 16,
-        fontSize: 14,
+        fontSize: SIZES.body4,
         color: COLORS.black,
         fontFamily: FONTS.AvenirDemi
     },
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     payNowText: {
         color: COLORS.white,
-        fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: SIZES.body5,
+        fontFamily:FONTS.AvenirDemi
     },
 });

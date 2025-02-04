@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { COLORS } from '../../themes/theme'; // Ensure you have this color set
+import { COLORS, FONTS, SIZES } from '../../themes/theme'; // Ensure you have this color set
 import { LinearGradientText } from 'react-native-linear-gradient-text'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
@@ -134,7 +134,7 @@ const Register = () => {
                             />
 
                         </View>
-                        <View style={{marginTop:100}}>
+                        <View style={{ marginTop: 90 }}>
                             <AppButton
                                 title="Sign Up"
                                 onPress={handleSubmit(onSubmit)} // Replace with your custom function
@@ -174,16 +174,16 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 200,
-        marginBottom: 20,
+        marginBottom: 10,
         marginLeft: 'auto',
         marginRight: 'auto'
     },
     registerHeader: {
-        fontSize: 26,
-        fontWeight: 'bold',
+        fontSize: SIZES.h3,
         marginBottom: 20,
         color: COLORS.header,
         textAlign: 'center',
+        fontFamily: FONTS.AvenirBold
     },
     inputField: {
         width: '100%',
@@ -220,13 +220,12 @@ const styles = StyleSheet.create({
     },
     loginText: {
         fontSize: 14,
-        color: '#333',
+        color: COLORS.HeadingColor,
     },
     loginLink: {
-        color: '#007BFF',
-        fontWeight: 'bold',
         marginBottom: 10,
         fontSize: 14,
+        fontWeight: 'bold',
     },
     loginButton: {
         marginTop: 10,

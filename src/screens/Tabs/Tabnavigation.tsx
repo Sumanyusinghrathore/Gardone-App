@@ -34,16 +34,16 @@ const TabNavigation = () => {
           marginTop: 0,
         },
         tabBarStyle: {
-      height: 80,
-      paddingTop: 0,
-      elevation: 0, // Removes default Android shadow
-      marginBottom: 0,
-      backgroundColor: COLORS.white, // Make the background transparent
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-      borderWidth:1,
-      borderColor:COLORS.gray,
-      marginVertical:-10
+          height: 80,
+          paddingTop: 0,
+          elevation: 0, // Removes default Android shadow
+          marginBottom: 0,
+          backgroundColor: COLORS.white, // Make the background transparent
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          borderWidth: 1,
+          borderColor: COLORS.gray,
+          marginVertical: -10
         },
       }}
     >

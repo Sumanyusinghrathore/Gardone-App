@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, ScrollView, TouchableOpacity, Dimensions, TextInput } from 'react-native';
-import { COLORS, FONTS } from '../../themes/theme';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Search from '../../assets/Icons/Search.svg';
 import Mic from '../../assets/Icons/Mic.svg';
@@ -36,12 +36,9 @@ const HomeScreen = () => {
   const handleSearchInputChange = (text: string) => {
     setSearchText(text);
   };
-
-  // Handle the search trigger (e.g., when Search icon is pressed)
   const handleSearch = () => {
     navigation.navigate("Search", { name: "Search" });
     console.log('Search text:', searchText);
-    // Add your search logic here (e.g., API call or filtering data)
   };
   const categories = [
     { id: '1', name: 'Indoor', image: require('../../assets/Images/Indoor.png') },
@@ -110,20 +107,23 @@ const HomeScreen = () => {
       <Text style={styles.categoryText}>{item.name}</Text>
     </TouchableOpacity>
   );
-  
+
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.verticalpadding}>
         <View style={styles.header}>
-          <Image source={require('../../assets/Images/Profile.png')} style={styles.profileImage} />
+          <Image source={require('../../assets/Images/Profile.jpg')} style={styles.profileImage} />
           <View style={styles.greetingContainer}>
             <Text style={styles.greetingText}>Welcome</Text>
             <View style={styles.gratingTextcontainer}>
-              <Text style={styles.userName}>Sumanyu Singh Rathore</Text>
-              <TouchableOpacity activeOpacity={ACTIVE_OPACITY} onPress={()=> {navigation.navigate("Profile")}}>
-                <HandIcon width={20} height={20} fill="#000" style={styles.handIcon} />
-              </TouchableOpacity>
+              <Text style={styles.userName} numberOfLines={2} ellipsizeMode="tail">
+                Sumanyu Singh
+                <TouchableOpacity activeOpacity={ACTIVE_OPACITY} onPress={() => navigation.navigate("Profile")}>
+                  <HandIcon width={20} height={20} fill="#000" style={styles.handIcon} />
+                </TouchableOpacity>
+              </Text>
+
             </View>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("Notifications")} activeOpacity={ACTIVE_OPACITY}>
@@ -182,7 +182,7 @@ const HomeScreen = () => {
         />
         <View style={styles.sectionHeader}>
           <DynamicText content="New Arrivals" />
-          <TouchableOpacity onPress={()=> {navigation.navigate("Arrivals", { name: "New Arrivals" })}}  style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
+          <TouchableOpacity onPress={() => { navigation.navigate("Arrivals", { name: "New Arrivals" }) }} style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
             <Text style={styles.seeMoreText}>See More</Text>
           </TouchableOpacity>
         </View>
@@ -205,7 +205,7 @@ const HomeScreen = () => {
         </ScrollView>
         <View style={styles.sectionHeader}>
           <DynamicText content="Best Sellers" />
-          <TouchableOpacity onPress={()=> {navigation.navigate("Arrivals", { name: "Best Sellers" })}}  style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
+          <TouchableOpacity onPress={() => { navigation.navigate("Arrivals", { name: "Best Sellers" }) }} style={styles.seeMoreButton} activeOpacity={ACTIVE_OPACITY}>
             <Text style={styles.seeMoreText}>See More</Text>
           </TouchableOpacity>
         </View>
@@ -286,14 +286,14 @@ const HomeScreen = () => {
                   <Text style={styles.testimonialText}>{item.text}</Text>
                   <Rightcommas width={20} height={20} style={styles.rightComma} />
                   <View style={styles.authorContainer}>
-                  <LinearGradientText
-                    colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
-                    text={item.author}
-                    start={{ x: 0.5, y: 0 }}  // Start at the top center
-                    end={{ x: 0.5, y: 1 }}
-                    textStyle={styles.testimonialAuthor}
-                    textProps={{ allowFontScaling: true }}
-                  />
+                    <LinearGradientText
+                      colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
+                      text={item.author}
+                      start={{ x: 0.5, y: 0 }}  // Start at the top center
+                      end={{ x: 0.5, y: 1 }}
+                      textStyle={styles.testimonialAuthor}
+                      textProps={{ allowFontScaling: true }}
+                    />
                   </View>
                 </View>
               </LinearGradient>
@@ -318,11 +318,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: width * 0.04,
-    paddingTop:50
+    paddingTop: 50
   },
   profileImage: {
-    width: width * 0.12,
-    height: width * 0.12,
+    width: width * 0.15,
+    height: width * 0.15,
     borderRadius: width * 0.06,
   },
   greetingContainer: {
@@ -333,16 +333,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 10,
+    flexWrap: 'wrap',
   },
   greetingText: {
-    fontSize: 20,
+    fontSize: 18,
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirBold
   },
   userName: {
     fontSize: 18,
     color: COLORS.HeadingColor,
-    fontFamily: FONTS.AvenirRegular
+    fontFamily: FONTS.AvenirRegular,
+    maxWidth: '80%',
+    flexShrink: 1,
   },
   handIcon: {
     marginHorizontal: 10
@@ -389,12 +392,12 @@ const styles = StyleSheet.create({
   },
   bannerimg: {
     height: '100%',
-    width:'90%',
+    width: '90%',
     objectFit: 'contain',
   },
   wrapper: {
     height: 200, // Adjust based on your design
-    
+
   },
   dotStyle: {
     backgroundColor: COLORS.secondary, // Inactive dot color
@@ -423,7 +426,7 @@ const styles = StyleSheet.create({
   categoryCard: {
     alignItems: 'center',
     height: "100%",
-    marginHorizontal:0,
+    marginHorizontal: 0,
   },
   categoryImage: {
     height: 190, // Maintain aspect ratio for images
@@ -431,9 +434,9 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   categoryText: {
-    fontSize: 20,
-    color: '#000',
-    fontFamily: FONTS.AvenirBold
+    fontSize: 18,
+    color: COLORS.HeadingColor,
+    fontFamily: FONTS.AvenirDemi
   },
   scrollContainer: {
     paddingLeft: 15,
@@ -483,14 +486,14 @@ const styles = StyleSheet.create({
   overlaptextContainer: {
     position: 'absolute',
     left: 0,  // Align text to the left
-    width: '65%',  // Limit text width to the left half
+    width: '70%',  // Limit text width to the left half
     paddingLeft: 20,  // Add padding to the left edge of the container
     justifyContent: 'flex-start',  // Align text at the top
     zIndex: 1,  // Ensure the text is above the image and gradient
     flexDirection: 'column',
   },
   overlaptext: {
-    fontSize: 20,
+    fontSize: SIZES.h3,
     color: COLORS.white,
     fontFamily: FONTS.AvenirBold,
     marginBottom: 10,
@@ -534,8 +537,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 20,
     padding: 2,
-    marginVertical:10,
-    marginLeft:10
+    marginVertical: 10,
+    marginLeft: 10
   },
   testimonial: {
     backgroundColor: COLORS.white,

@@ -18,6 +18,7 @@ import MaintenanceForm from '../screens/MaintenanceForm/MaintenanceForm';
 import OrderSummary from '../screens/OrderSummary/OrderSummary';
 import Payment from '../screens/Payment/Payment';
 import OrderConfirmed from '../screens/OrderConfirmed/OrderConfirmed';
+import MainProfile from '../screens/Profile/MainProfile/MainProfile';
 
 const Stack = createStackNavigator();
 
@@ -71,6 +72,10 @@ export const screens = [
     headerTitle: 'Payment', // Set the custom header name here
   }, },
   { name: 'OrderConfirmed',  component: OrderConfirmed, options: { headerShown: false } },
+  { name: 'MainProfile',  component: MainProfile, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Profile', // Set the custom header name here
+  } },
 ];
 
 const App = () => {

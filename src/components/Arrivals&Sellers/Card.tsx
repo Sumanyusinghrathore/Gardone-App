@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import PlusIcon from '../../assets/Icons/PlusVector.svg'
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
-import { COLORS, FONTS } from '../../themes/theme';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/types';
@@ -48,12 +48,10 @@ export default Card;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 350, // Adjust width as per design
+    width: 350,
     borderRadius: 15,
     overflow: 'hidden',
-    marginRight: 15, // Space between cards
-    elevation: 5, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
+    marginRight: 15,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
@@ -61,17 +59,17 @@ const styles = StyleSheet.create({
     height: 140,
   },
   cardContent: {
-    flexDirection: 'row', // Align image and text side by side
+    flexDirection: 'row',
     alignItems: 'center',
   },
   imageWrapper: {
     width: 100,
     height: 100,
-    backgroundColor: '#fff', // White background for the image
+    backgroundColor: COLORS.white,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
-    marginHorizontal: 10, // Space between image and text
+    marginHorizontal: 10,
     marginVertical: 15
   },
   image: {
@@ -80,12 +78,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   textContainer: {
-    flex: 1, // Take up remaining space
+    flex: 1,
     justifyContent: 'center',
     
   },
   title: {
-    fontSize: 18,
+    fontSize: SIZES.h4,
     color: COLORS.white,
     marginBottom: 5,
     fontFamily:FONTS.AvenirBold

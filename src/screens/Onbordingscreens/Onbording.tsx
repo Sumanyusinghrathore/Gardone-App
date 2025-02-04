@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, FlatList, Dimensions, Text, TouchableOpacity, 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/types';
-import { COLORS, FONTS } from "../../themes/theme";
+import { COLORS, FONTS, SIZES } from "../../themes/theme";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigationStateType, useApp } from '../../context/AppContext';
 
@@ -14,7 +14,7 @@ const Onboarding = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef<FlatList>(null);
     const appContext = useApp();
-    const { width } = Dimensions.get("window");
+    const { width, height } = Dimensions.get("window");
 
     const screens = [
         {
@@ -82,7 +82,7 @@ const Onboarding = () => {
                 style={[
                     styles.dot,
                     {
-                        backgroundColor: index === currentIndex ? COLORS.white : COLORS.gray,
+                        backgroundColor: index === currentIndex ? "#fff" : "#bbb",
                         width: index === currentIndex ? 30 : 10,
                     },
                 ]}
@@ -117,7 +117,7 @@ const Onboarding = () => {
         } else if (currentIndex === screens.length - 1) {
             return (
                 <View style={styles.buttonloginContainer}>
-                    <View style={{ flexDirection: 'column' }}>
+                    <View>
                     <TouchableOpacity style={[styles.loginButton, { marginBottom: 20 }]} onPress={Started}>
                             <Text style={styles.buttonTextRight}>Get Started</Text>
                     </TouchableOpacity>
@@ -170,32 +170,36 @@ export default Onboarding;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#154E3B",
+        backgroundColor: COLORS.buttontext,
         alignItems: "center",
     },
     slide: {
         justifyContent: "center",
         alignItems: "center",
-        marginVertical:'auto'
+        width: '100%',
+        height: '100%'
     },
     image: {
-        width: "100%",
-        height: "100%",
-        position: "absolute",
+        width: Dimensions.get("window").width, // Full width of screen
+        height: Dimensions.get("window").height * 1, // 60% of screen height
+        resizeMode: 'cover',
+        position:'absolute'
+        
     },
     text: {
         color: COLORS.white,
-        fontSize: 24,
-        paddingHorizontal: 40,
-        marginBottom: 600,
+        fontSize: SIZES.h2,
+        paddingHorizontal: 20,
         textAlign: "center",
+        bottom: SIZES.h2 * 13, // Adjusted dynamically based on font size
+        alignSelf: 'stretch',
         fontFamily:FONTS.AvenirDemi
     },
     dotContainer: {
         flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 10,
+        position:'absolute',
+        bottom: 70,  // 10px from the bottom
+        alignSelf: "center",
     },
     dot: {
         height: 10,
@@ -205,12 +209,14 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "100%",
-        marginTop: 15,
+        width: "100%",  // Adjust width to align properly
+        position: "absolute",
+        bottom: 5,  // 10px from the bottom
+        alignSelf: "center",
     },
     button: {
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         borderRadius: 5,
     },
     buttonText: {
@@ -230,7 +236,8 @@ const styles = StyleSheet.create({
     buttonloginContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        bottom:50
+        bottom:30,
+        position:'absolute'
     },
     loginButton: {
         backgroundColor: COLORS.white,
@@ -252,7 +259,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', // Ensures the text and button are vertically centered
         justifyContent: 'center', // Centers the content horizontally
         marginTop: 5, // Optional: Adjust the top margin if you need space above the text
-        marginBottom: 5, // Optional: Adjust the bottom margin if you need space below the text
+        marginBottom: 5, // Optional: Adjust the bottom margin if you need space below the text4
     },
     alreadytext:{
         fontSize: 14,

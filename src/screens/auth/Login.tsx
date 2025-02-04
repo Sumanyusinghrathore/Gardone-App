@@ -14,7 +14,7 @@ import Facebook from '../../assets/Icons/FbIcon.svg';
 import Google from '../../assets/Icons/GoogleIcon.svg';
 import Appleid from '../../assets/Icons/AppleIcon.svg';
 import { ScrollView } from 'react-native-gesture-handler';
-import { COLORS } from '../../themes/theme';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import { LinearGradientText } from 'react-native-linear-gradient-text'
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack'; // Import this
@@ -194,11 +194,11 @@ const styles = StyleSheet.create({
         marginRight: 'auto'
     },
     headerText: {
-        fontSize: 26,
-        fontWeight: 'bold',
+        fontSize: SIZES.h3,
         marginBottom: 20,
         color: COLORS.header,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily:FONTS.AvenirBold
     },
     input: {
         width: '100%',
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     loginButtonText: {
         color: COLORS.white,
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily:FONTS.AvenirBold
     },
     socialButtonsContainer: {
         flexDirection: 'column',
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
-        marginHorizontal: 40,
+        marginHorizontal: 25,
         marginVertical: 10,
         borderColor: '#DDDDDD',
         borderWidth: 1,
@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
     socialButtonText: {
         color: COLORS.header,
         fontSize: 16,
+        fontFamily:FONTS.AvenirRegular
     },
     signUpContainer: {
         flexDirection: 'row',

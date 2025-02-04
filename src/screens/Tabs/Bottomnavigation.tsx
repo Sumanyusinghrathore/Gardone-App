@@ -10,6 +10,7 @@ import Search from '../Search/Search';
 import Filter from '../../assets/Icons/FilterSvg.svg'; // Import Wishlist SVG
 import Profile from '../Profile/Profile';
 import Notifications from '../Notifications/Notifications';
+import TrackYourOrder from '../Track_Your_Order/TrackYourOrder';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,10 @@ export const screens = [
         headerTitle: 'My Profile', // Set the custom header name here
       },
     },
+    { name: 'Track', component: TrackYourOrder, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Track Your Order',
+    } },
   
 ];
 

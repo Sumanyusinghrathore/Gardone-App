@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, ViewStyle, TextStyle, StyleProp } from 'react-native';
-import { COLORS, FONTS } from '../../themes/theme';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 
 interface AppButtonProps {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     registerButtonText: {
         color: COLORS.white,
-        fontSize: 20,
+        fontSize: SIZES.body2,
         fontFamily:FONTS.AvenirBold,
     },
     disabledButton: {

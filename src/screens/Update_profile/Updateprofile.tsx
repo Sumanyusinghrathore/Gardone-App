@@ -10,7 +10,7 @@ const Updateprofile = () => {
   )
 }
 
-export default Updateprofile
+export default Updateprofile  
 
 const styles = StyleSheet.create({
   container: {
