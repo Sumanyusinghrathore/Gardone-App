@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     },
     registerButtonText: {
         color: COLORS.white,
-        fontSize: SIZES.body2,
-        fontFamily:FONTS.AvenirBold,
+        fontSize: SIZES.body3,
+        fontFamily:FONTS.AvenirDemi,
     },
     disabledButton: {
         backgroundColor: COLORS.gray, // Adjust based on the disabled state

@@ -22,7 +22,6 @@ import { RootStackParamList } from '../../routes/types';
 import AppButton from '../../components/CustomButton/AppButton';
 import { navigationStateType, useApp } from '../../context/AppContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CustomInput from '../../components/CustomInputs/Custominputs';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 const Login = () => {

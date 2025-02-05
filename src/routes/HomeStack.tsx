@@ -19,6 +19,10 @@ import OrderSummary from '../screens/OrderSummary/OrderSummary';
 import Payment from '../screens/Payment/Payment';
 import OrderConfirmed from '../screens/OrderConfirmed/OrderConfirmed';
 import MainProfile from '../screens/Profile/MainProfile/MainProfile';
+import OrderHistoryDetail from '../screens/OrderHistoryDetail/OrderHistoryDetail';
+import Setting from '../screens/Settings/Setting';
+import PrivacyPolicy from '../screens/PrivacyPolicy/PrivacyPolicy';
+import Help from '../screens/Help/Help';
 
 const Stack = createStackNavigator();
 
@@ -76,6 +80,23 @@ export const screens = [
     ...headerOptions(COLORS.white),
     headerTitle: 'Profile', // Set the custom header name here
   } },
+  { name: 'OrderDetail',  component: OrderHistoryDetail, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Order History Detail', // Set the custom header name here
+  } },
+  { name: 'Setting',  component: Setting, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Settings', // Set the custom header name here
+  } },
+  { name: 'Privacy',  component: PrivacyPolicy, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Privacy Policy', // Set the custom header name here
+  } },
+  { name: 'Help',  component: Help, options: {
+    ...headerOptions(COLORS.white),
+    headerTitle: 'Help Centre', // Set the custom header name here
+  } },
+  
 ];
 
 const App = () => {

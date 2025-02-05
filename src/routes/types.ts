@@ -1,4 +1,13 @@
 // src/types.ts
+export type Order = {
+  id: string;
+  productName: string;
+  time: string;
+  date: string;
+  status: string;
+  image: any;
+};
+
 export type RootStackParamList = {
   Login: undefined;
   Onboarding: undefined; // Fixed spelling from 'Onbording'
@@ -25,5 +34,9 @@ export type RootStackParamList = {
   OrderConfirmed:undefined;
   Track:undefined;
   Cart:undefined;
-  MainProfile:undefined
+  MainProfile:undefined;
+  OrderDetail: { order: Order };
+  Setting:undefined;
+  Privacy:undefined;
+  Help:undefined;
 };

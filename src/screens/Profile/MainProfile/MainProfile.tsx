@@ -11,9 +11,14 @@ import { COLORS, FONTS, SIZES } from '../../../themes/theme';
 import { useNavigation } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { ACTIVE_OPACITY } from '../../../themes/genericStyles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../routes/types';
+
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const MainProfile = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const pickImage = async () => {
@@ -29,11 +34,11 @@ const MainProfile = () => {
   };
 
   const menuItems = [
-    { icon: <Profile width={40} height={40} />, label: 'Profile', action: () => {} },
-    { icon: <History width={40} height={40} />, label: 'Order History', action: () => {} },
-    { icon: <Privacy width={40} height={40} />, label: 'Privacy Policy', action: () => {} },
-    { icon: <Settings width={40} height={40} />, label: 'Settings', action: () => {} },
-    { icon: <Help width={40} height={40} />, label: 'Help', action: () => {} },
+    { icon: <Profile width={40} height={40} />, label: 'Profile', action: () => navigation.navigate("UpdateProfile")},
+    { icon: <History width={40} height={40} />, label: 'Order History', action: () => navigation.navigate("OrderHistory") },
+    { icon: <Privacy width={40} height={40} />, label: 'Privacy Policy', action: () => navigation.navigate("Privacy") },
+    { icon: <Settings width={40} height={40} />, label: 'Settings', action: () => navigation.navigate("Setting")},
+    { icon: <Help width={40} height={40} />, label: 'Help', action: () => navigation.navigate("Help") },
     { icon: <Logout width={40} height={40} />, label: 'Logout', action: () => {} },
   ];
 
