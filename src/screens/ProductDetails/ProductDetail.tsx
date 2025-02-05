@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import React, { useState } from 'react';
-import { COLORS, FONTS, REMOVESTRING, SIZES } from '../../themes/theme';
+import React, { useState,useRef } from 'react';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import Swiper from 'react-native-swiper';
 import Star from '../../assets/Icons/Star.svg';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,6 +18,7 @@ import Card from '../../components/Arrivals&Sellers/Card';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/types';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useData } from '../../context/DataContext/DataContext';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -39,14 +40,8 @@ const ProductDetail = () => {
   const handleDecreaseQuantity = () => setQuantity(prev => (prev > 0 ? prev - 1 : 0));
 
   const formattedQuantity = quantity.toString().padStart(2, '0');
-  const originalPrice = 1999.0;
-  const discountedPrice = 499.0;
-  const { width, height } = Dimensions.get('window');
-  
-  const discountPercentage = Math.round(
-    ((originalPrice - discountedPrice) / originalPrice) * 100
-  );
 
+  const scrollViewRef = useRef<ScrollView>(null);
   const ArrivalscardData = [
     {
       title: 'Monstera',
@@ -73,7 +68,7 @@ const ProductDetail = () => {
       backgroundColor: '#4a8b3c',
     },
   ];
-
+  const { productData } = useData();
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -97,13 +92,13 @@ const ProductDetail = () => {
         </Swiper>
 
         <View style={styles.productDetails}>
-          <Text style={styles.Header}>Product Name</Text>
+          <Text style={styles.Header}>{productData?.title || 'Default Title'}</Text>
           <Star width={100} />
           <View style={styles.priceContainer}>
-            <Text style={styles.discountedPrice}>{REMOVESTRING(discountedPrice)}</Text>
-            <Text style={styles.price}>{originalPrice}</Text>
+            <Text style={styles.discountedPrice}>{productData?.price}</Text>
+            <Text style={styles.price}>{productData?.price}</Text>
             <View style={styles.discountContainer}>
-              <Text style={styles.discountText}>{discountPercentage}% OFF</Text>
+              <Text style={styles.discountText}>{productData?.price}% OFF</Text>
             </View>
           </View>
           <Text style={styles.heading}>Product Name</Text>
@@ -259,167 +254,168 @@ const ProductDetail = () => {
           </Collapsible>
         </View>
         <View style={styles.accorioncontainer}>
-      {/* Accordion 1 */}
-      <View style={styles.accodionmargincontainer}>
-        <TouchableOpacity
-          style={styles.header}
-          onPress={() => customtoggleAccordion(1)}
-        >
-          <Text style={styles.accodionheader}>Water Once A Week</Text>
-          <View>
-            {customactiveAccordion === 1 ? (
-              <Toparrow width={25} height={25} />
-            ) : (
-              <Downarrow width={25} height={25} />
+          {/* Accordion 1 */}
+          <View style={styles.accodionmargincontainer}>
+            <TouchableOpacity
+              style={styles.header}
+              onPress={() => customtoggleAccordion(1)}
+            >
+              <Text style={styles.accodionheader}>Water Once A Week</Text>
+              <View>
+                {customactiveAccordion === 1 ? (
+                  <Toparrow width={25} height={25} />
+                ) : (
+                  <Downarrow width={25} height={25} />
+                )}
+              </View>
+            </TouchableOpacity>
+            {customactiveAccordion === 1 && (
+              <View style={styles.content}>
+                <Text style={styles.contentText}>
+                  This plant requires watering once a week to thrive. Make sure to avoid overwatering.
+                </Text>
+              </View>
             )}
           </View>
-        </TouchableOpacity>
-        {customactiveAccordion === 1 && (
-          <View style={styles.content}>
-            <Text style={styles.contentText}>
-              This plant requires watering once a week to thrive. Make sure to avoid overwatering.
-            </Text>
-          </View>
-        )}
-      </View>
-      <Divider />
-      {/* Accordion 2 */}
-      <View style={styles.accodionmargincontainer}>
-        <TouchableOpacity
-          style={styles.header}
-          onPress={() => customtoggleAccordion(2)}
-        >
-          <Text style={styles.accodionheader}>Need Bright Indirect Sunlight</Text>
-          <View>
-            {customactiveAccordion === 2 ? (
-              <Toparrow width={25} height={25} />
-            ) : (
-              <Downarrow width={25} height={25} />
+          <Divider />
+          {/* Accordion 2 */}
+          <View style={styles.accodionmargincontainer}>
+            <TouchableOpacity
+              style={styles.header}
+              onPress={() => customtoggleAccordion(2)}
+            >
+              <Text style={styles.accodionheader}>Need Bright Indirect Sunlight</Text>
+              <View>
+                {customactiveAccordion === 2 ? (
+                  <Toparrow width={25} height={25} />
+                ) : (
+                  <Downarrow width={25} height={25} />
+                )}
+              </View>
+            </TouchableOpacity>
+            {customactiveAccordion === 2 && (
+              <View style={styles.content}>
+                <Text style={styles.contentText}>
+                  Place this plant in a spot with bright but indirect sunlight to ensure healthy growth.
+                </Text>
+              </View>
             )}
           </View>
-        </TouchableOpacity>
-        {customactiveAccordion === 2 && (
-          <View style={styles.content}>
-            <Text style={styles.contentText}>
-              Place this plant in a spot with bright but indirect sunlight to ensure healthy growth.
-            </Text>
-          </View>
-        )}
-      </View>
-      <Divider />
-      {/* Accordion 3 */}
-      <View style={styles.accodionmargincontainer}>
-        <TouchableOpacity
-          style={styles.header}
-          onPress={() => customtoggleAccordion(3)}
-        >
-          <Text style={styles.accodionheader}>Not Pet Friendly</Text>
-          <View>
-            {customactiveAccordion === 3 ? (
-              <Toparrow width={25} height={25} />
-            ) : (
-              <Downarrow width={25} height={25} />
+          <Divider />
+          {/* Accordion 3 */}
+          <View style={styles.accodionmargincontainer}>
+            <TouchableOpacity
+              style={styles.header}
+              onPress={() => customtoggleAccordion(3)}
+            >
+              <Text style={styles.accodionheader}>Not Pet Friendly</Text>
+              <View>
+                {customactiveAccordion === 3 ? (
+                  <Toparrow width={25} height={25} />
+                ) : (
+                  <Downarrow width={25} height={25} />
+                )}
+              </View>
+            </TouchableOpacity>
+            {customactiveAccordion === 3 && (
+              <View style={styles.content}>
+                <Text style={styles.contentText}>
+                  Keep this plant away from pets as it may be toxic if ingested.
+                </Text>
+              </View>
             )}
           </View>
-        </TouchableOpacity>
-        {customactiveAccordion === 3 && (
-          <View style={styles.content}>
-            <Text style={styles.contentText}>
-              Keep this plant away from pets as it may be toxic if ingested.
-            </Text>
-          </View>
-        )}
-      </View>
-      <Divider />
-      {/* Accordion 4 */}
-      <View style={styles.accodionmargincontainer}>
-        <TouchableOpacity
-          style={styles.header}
-          onPress={() => customtoggleAccordion(4)}
-        >
-          <Text style={styles.accodionheader}>Beginner Friendly</Text>
-          <View>
-            {customactiveAccordion === 4 ? (
-              <Toparrow width={25} height={25} />
-            ) : (
-              <Downarrow width={25} height={25} />
+          <Divider />
+          {/* Accordion 4 */}
+          <View style={styles.accodionmargincontainer}>
+            <TouchableOpacity
+              style={styles.header}
+              onPress={() => customtoggleAccordion(4)}
+            >
+              <Text style={styles.accodionheader}>Beginner Friendly</Text>
+              <View>
+                {customactiveAccordion === 4 ? (
+                  <Toparrow width={25} height={25} />
+                ) : (
+                  <Downarrow width={25} height={25} />
+                )}
+              </View>
+            </TouchableOpacity>
+            {customactiveAccordion === 4 && (
+              <View style={styles.content}>
+                <Text style={styles.contentText}>
+                  This plant is easy to care for, making it perfect for beginners.
+                </Text>
+              </View>
             )}
           </View>
-        </TouchableOpacity>
-        {customactiveAccordion === 4 && (
-          <View style={styles.content}>
-            <Text style={styles.contentText}>
-              This plant is easy to care for, making it perfect for beginners.
-            </Text>
-          </View>
-        )}
-      </View>
-    </View>
-    <View style={styles.sharecontainer}>
-      <Text style={styles.headerText}>Share product:</Text>
-      <TouchableOpacity style={styles.icon}>
-        <Share width={30} height={30} />
-      </TouchableOpacity>
+        </View>
+        <View style={styles.sharecontainer}>
+          <Text style={styles.headerText}>Share product:</Text>
+          <TouchableOpacity style={styles.icon}>
+            <Share width={30} height={30} />
+          </TouchableOpacity>
 
-      <TouchableOpacity style={styles.icon}>
-        <Copy width={30} height={30} />
-      </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
+            <Copy width={30} height={30} />
+          </TouchableOpacity>
 
-      <TouchableOpacity style={styles.icon}>
-        <Whatsapp width={30} height={30} />
-      </TouchableOpacity>   
-    </View>
-    <View style={{marginTop:15}}>
-    <DynamicText content="Frequently Bought Together" />
-    <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContainer}
-        >
-          {ArrivalscardData.map((item, index) => (
-            <Card
-              key={index} // Unique key for each card
-              title={item.title}
-              type={item.type}
-              age={item.age}
-              price={item.price}
-              image={item.image}
-              backgroundColor={item.backgroundColor}
-            />
-          ))}
-        </ScrollView>
-    </View>
-    <View style={{marginTop:15}}>
-    <DynamicText content="Similar Products" />
-    <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContainer}
-        >
-          {ArrivalscardData.map((item, index) => (
-            <Card
-              key={index} // Unique key for each card
-              title={item.title}
-              type={item.type}
-              age={item.age}
-              price={item.price}
-              image={item.image}
-              backgroundColor={item.backgroundColor}
-            />
-          ))}
-        </ScrollView>
-    </View>
+          <TouchableOpacity style={styles.icon}>
+            <Whatsapp width={30} height={30} />
+          </TouchableOpacity>
+        </View>
+        <View style={{ marginTop: 15 }}>
+          <DynamicText content="Frequently Bought Together" />
+          <ScrollView
+          ref={scrollViewRef}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContainer}
+          >
+            {ArrivalscardData.map((item, index) => (
+              <Card
+                key={index} // Unique key for each card
+                title={item.title}
+                type={item.type}
+                age={item.age}
+                price={item.price}
+                image={item.image}
+                backgroundColor={item.backgroundColor}
+              />
+            ))}
+          </ScrollView>
+        </View>
+        <View style={{ marginTop: 15 }}>
+          <DynamicText content="Similar Products" />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContainer}
+          >
+            {ArrivalscardData.map((item, index) => (
+              <Card
+                key={index} // Unique key for each card
+                title={item.title}
+                type={item.type}
+                age={item.age}
+                price={item.price}
+                image={item.image}
+                backgroundColor={item.backgroundColor}
+              />
+            ))}
+          </ScrollView>
+        </View>
       </ScrollView>
       <View style={styles.bottomContainer}>
-      <TouchableOpacity style={styles.buyNowButton} onPress={() => (navigation.navigate("Cart"))}>
-        <Text style={styles.buyNowText}>Buy Now</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.addToCartButton} onPress={() => (navigation.navigate("Cart"))}>
-        <Text style={styles.addToCartText}>Add To Cart</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.buyNowButton} onPress={() => (navigation.navigate("Cart"))}>
+          <Text style={styles.buyNowText}>Buy Now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.addToCartButton} onPress={() => (navigation.navigate("Cart"))}>
+          <Text style={styles.addToCartText}>Add To Cart</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-    </View>
-    
+
   );
 };
 
@@ -433,13 +429,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     padding: 0,
     paddingVertical: 10,
-    paddingBottom:90,    
+    paddingBottom: 90,
   },
   bannerimg: {
     height: 300,
     width: '100%',
     resizeMode: 'contain',
-    
+
   },
   wrapper: {
     height: 300,
@@ -472,14 +468,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.black,
     marginHorizontal: 5,
-    fontFamily:FONTS.AvenirDemi
+    fontFamily: FONTS.AvenirDemi
   },
   price: {
     fontSize: 14,
     color: COLORS.gray,
     marginHorizontal: 5,
     textDecorationLine: 'line-through',
-    fontFamily:FONTS.AvenirDemi
+    fontFamily: FONTS.AvenirDemi
   },
   discountContainer: {
     backgroundColor: COLORS.red,
@@ -487,13 +483,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
     marginHorizontal: 5,
-    
+
 
   },
   discountText: {
     fontSize: 16,
     color: COLORS.white,
-    fontFamily:FONTS.AvenirDemi
+    fontFamily: FONTS.AvenirDemi
   },
 
   Header: {
@@ -510,7 +506,7 @@ const styles = StyleSheet.create({
   },
   productDetails: {
     marginTop: 20,
-    marginHorizontal:15
+    marginHorizontal: 15
   },
   planterButtonsContainer: {
     flexDirection: 'row',
@@ -582,19 +578,19 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: SIZES.body3,
     color: COLORS.black,
-    fontFamily:FONTS.AvenirBold
+    fontFamily: FONTS.AvenirBold
   },
   content: {
     backgroundColor: COLORS.white,
     padding: 10,
-    paddingHorizontal:5
+    paddingHorizontal: 5
   },
   contentText: {
     fontSize: SIZES.h4,
     color: COLORS.black,
     lineHeight: 24,
-    fontFamily:FONTS.AvenirRegular,
-    marginHorizontal:0
+    fontFamily: FONTS.AvenirRegular,
+    marginHorizontal: 0
   },
   reviewcard: {
     flexDirection: 'row',
@@ -613,7 +609,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: "80%",
     right: "88%",
-    objectFit:'cover'
+    objectFit: 'cover'
   },
   cardRightContent: {
     flex: 1, // Allows the right-side content to take up available space
@@ -627,9 +623,9 @@ const styles = StyleSheet.create({
   cardName: {
     fontSize: 18,
     marginBottom: 4,
-    left:70,
-    color:COLORS.black,
-    fontFamily:FONTS.AvenirMedium
+    left: 70,
+    color: COLORS.black,
+    fontFamily: FONTS.AvenirMedium
   },
   cardRating: {
     flexDirection: "row",
@@ -641,31 +637,31 @@ const styles = StyleSheet.create({
   },
   cardDescription: {
     fontSize: 14,
-    color:COLORS.header,
-    fontFamily:FONTS.AvenirRegular,
-    marginTop:10
+    color: COLORS.header,
+    fontFamily: FONTS.AvenirRegular,
+    marginTop: 10
   },
-  accodionmargin:{
-    marginVertical:20,
-    marginHorizontal:15
+  accodionmargin: {
+    marginVertical: 20,
+    marginHorizontal: 15
   },
   accorioncontainer: {
     borderWidth: 1,
     borderColor: COLORS.bordercolor2,
     borderRadius: 5,
-    marginVertical:10,
-    marginHorizontal:15,
+    marginVertical: 10,
+    marginHorizontal: 15,
   },
-  accodionmargincontainer:{
-    marginVertical:5,
-    paddingHorizontal:10,
+  accodionmargincontainer: {
+    marginVertical: 5,
+    paddingHorizontal: 10,
   },
   accodionheader: {
-    fontSize:16,
-    color:COLORS.HeadingColor,
-    fontFamily:FONTS.AvenirDemi
+    fontSize: 16,
+    color: COLORS.HeadingColor,
+    fontFamily: FONTS.AvenirDemi
   },
-  sharecontainer:{
+  sharecontainer: {
     flexDirection: 'row',
     alignItems: 'center',
     margin: 10,
@@ -699,12 +695,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     borderRadius: 10,
     alignItems: 'center',
-    
+
   },
   buyNowText: {
     color: COLORS.primary,
     fontSize: 16,
-    fontFamily:FONTS.AvenirDemi
+    fontFamily: FONTS.AvenirDemi
   },
   addToCartButton: {
     flex: 1,
@@ -712,11 +708,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderRadius: 10,
     alignItems: 'center',
-    borderColor:'#7A7A7A'
+    borderColor: '#7A7A7A'
   },
   addToCartText: {
     color: 'white',
     fontSize: 16,
-    fontFamily:FONTS.AvenirDemi
+    fontFamily: FONTS.AvenirDemi
   },
 });

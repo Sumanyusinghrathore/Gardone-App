@@ -98,7 +98,7 @@ const HomeScreen = () => {
   const renderCategoryCard = ({ item }: { item: { id: string; name: string; image: any } }) => (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate('Categorie', { name: item.name })
+        navigation.navigate('Categorie', { name: item.name })  
       }
       activeOpacity={ACTIVE_OPACITY}
       style={[styles.categoryCard, { width: screenWidth * 0.4 }]}
@@ -518,10 +518,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginVertical: 10,
-    marginHorizontal: 20
+    marginHorizontal: 10
   },
   featureItem: {
-    width: width / 2 - 40,
+    width: width / 2 - 25,
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 15

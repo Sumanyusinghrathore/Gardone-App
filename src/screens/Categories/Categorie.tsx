@@ -7,9 +7,12 @@ import { RouteProp } from '@react-navigation/native';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 import PlusIcon from '../../assets/Icons/PlusVector.svg';
 import { Dimensions } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useData } from '../../context/DataContext/DataContext';
 
 const { width: screenWidth } = Dimensions.get('window');
-type RouteParams = RouteProp<RootStackParamList>;
+type RouteParams = RouteProp<RootStackParamList, 'Categorie'>;
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const ArrivalscardData = [
   {
@@ -102,25 +105,33 @@ const ArrivalscardData = [
   },
 ];
 
+ 
+
+  
 
 const Categorie = () => {
   const route = useRoute<RouteParams>(); // Type the route hook with RouteParams
   const categoryName = route.params?.name;
-  const navigation = useNavigation();
-
+  const navigation = useNavigation<NavigationProp>();
+  const { setProductData } = useData();  // Use setProductData from context
   useEffect(() => {
     navigation.setOptions({
       headerTitle: categoryName,
     });
   }, [navigation, categoryName]);
 
-   // Filter the data based on the category name
-   const filteredData = ArrivalscardData.filter(item =>
+  // Filter the data based on the category name
+  const filteredData = ArrivalscardData.filter(item =>
     item.type.toLowerCase() === categoryName?.toLocaleLowerCase()
   );
+  const handleAddButtonPress = (item: any) => {
+    console.log("Product Data:");
+    setProductData(item);
+    navigation.navigate('ProductDetail', { name: 'Product Details' });
+  };
 
   return (
-<View style={styles.container}>
+    <View style={styles.container}>
       {/* Render a list of items based on the filtered data */}
       <FlatList
         data={filteredData}
@@ -141,8 +152,12 @@ const Categorie = () => {
               </View>
 
               {/* Add button */}
-              <TouchableOpacity style={styles.addButton} activeOpacity={ACTIVE_OPACITY}>
-              <PlusIcon width={20} height={20} fill="#fff" />
+              <TouchableOpacity
+                onPress={() => handleAddButtonPress(item)}
+                style={styles.addButton}
+                activeOpacity={ACTIVE_OPACITY}
+              >
+                <PlusIcon width={20} height={20} fill="#fff" />
               </TouchableOpacity>
             </View>
           </View>
@@ -162,7 +177,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     marginBottom: 10,
-    color:COLORS.primary
+    color: COLORS.primary
   },
   cardContainer: {
     width: screenWidth * 0.9,
@@ -175,7 +190,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     padding: 5,
     height: 140,
-    marginVertical:10
+    marginVertical: 10
   },
   cardContent: {
     flexDirection: 'row', // Align image and text side by side

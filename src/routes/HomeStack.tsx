@@ -23,6 +23,10 @@ import OrderHistoryDetail from '../screens/OrderHistoryDetail/OrderHistoryDetail
 import Setting from '../screens/Settings/Setting';
 import PrivacyPolicy from '../screens/PrivacyPolicy/PrivacyPolicy';
 import Help from '../screens/Help/Help';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../routes/types';
+import { useNavigation } from '@react-navigation/native';
+import { DataProvider } from '../context/DataContext/DataContext';
 
 const Stack = createStackNavigator();
 
@@ -35,79 +39,109 @@ const headerOptions = (bg: string) => ({
   headerBackTitleVisible: false,
 });
 
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 export const screens = [
-  { name: 'Home', component: TabNavigation, options: { headerShown: false } },
+  { name: 'cart', component: TabNavigation, options: { headerShown: false } },
   { name: 'ProductDetail', component: ProductDetail, options: headerOptions(COLORS.white) },
   { name: 'Filter', component: Filter, options: headerOptions(COLORS.white) },
-  { name: 'Address',  component: Address, options: {
-          ...headerOptions(COLORS.white),
-          headerTitle: 'Address Book', // Set the custom header name here
-        }, },
-  { name: 'UpdateProfile', component: Updateprofile, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Update Profile', // Set the custom header name here
-  }, },
-  { name: 'Rewards', component: Rewards, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Rewards', // Set the custom header name here
-  }, },
-  { name: 'OrderHistory', component: OrderHistory, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Order History', // Set the custom header name here
-  }, },
-  { name: 'Changepassword', component: Changepassword, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Change Password', // Set the custom header name here
-  }, },
-  { name: 'AddAddress',  component: AddAddress, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Add Address', // Set the custom header name here
-  }, },
-  { name: 'MaintenanceForm',  component: MaintenanceForm, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Form', // Set the custom header name here
-  }, },
-  { name: 'OrderSummary',  component: OrderSummary, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Order Summary', // Set the custom header name here
-  }, },
-  { name: 'Payment',  component: Payment, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Payment', // Set the custom header name here
-  }, },
-  { name: 'OrderConfirmed',  component: OrderConfirmed, options: { headerShown: false } },
-  { name: 'MainProfile',  component: MainProfile, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Profile', // Set the custom header name here
-  } },
-  { name: 'OrderDetail',  component: OrderHistoryDetail, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Order History Detail', // Set the custom header name here
-  } },
-  { name: 'Setting',  component: Setting, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Settings', // Set the custom header name here
-  } },
-  { name: 'Privacy',  component: PrivacyPolicy, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Privacy Policy', // Set the custom header name here
-  } },
-  { name: 'Help',  component: Help, options: {
-    ...headerOptions(COLORS.white),
-    headerTitle: 'Help Centre', // Set the custom header name here
-  } },
-  
+  {
+    name: 'Address', component: Address, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Address Book', // Set the custom header name here
+    },
+  },
+  {
+    name: 'UpdateProfile', component: Updateprofile, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Update Profile', // Set the custom header name here
+    },
+  },
+  {
+    name: 'Rewards', component: Rewards, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Rewards', // Set the custom header name here
+    },
+  },
+  {
+    name: 'OrderHistory', component: OrderHistory, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Order History', // Set the custom header name here
+    },
+  },
+  {
+    name: 'Changepassword', component: Changepassword, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Change Password', // Set the custom header name here
+    },
+  },
+  {
+    name: 'AddAddress', component: AddAddress, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Add Address', // Set the custom header name here
+    },
+  },
+  {
+    name: 'MaintenanceForm', component: MaintenanceForm, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Form', // Set the custom header name here
+    },
+  },
+  {
+    name: 'OrderSummary', component: OrderSummary, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Order Summary', // Set the custom header name here
+    },
+  },
+  {
+    name: 'Payment', component: Payment, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Payment', // Set the custom header name here
+    },
+  },
+  { name: 'OrderConfirmed', component: OrderConfirmed, options: { headerShown: false } },
+  {
+    name: 'MainProfile', component: MainProfile, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Profile', // Set the custom header name here
+    }
+  },
+  {
+    name: 'OrderDetail', component: OrderHistoryDetail, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Order History Detail', // Set the custom header name here
+    }
+  },
+  {
+    name: 'Setting', component: Setting, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Settings', // Set the custom header name here
+    }
+  },
+  {
+    name: 'Privacy', component: PrivacyPolicy, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Privacy Policy', // Set the custom header name here
+    }
+  },
+  {
+    name: 'Help', component: Help, options: {
+      ...headerOptions(COLORS.white),
+      headerTitle: 'Help Centre', // Set the custom header name here
+    }
+  },
+
 ];
 
 const App = () => {
+  const navigation = useNavigation<NavigationProp>();
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false ,gestureDirection:'horizontal' }}>
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, gestureDirection: 'horizontal' }}>
       {screens.map((screen, index) => (
         <Stack.Screen
           key={index}
           name={screen.name}
           component={screen.component}
-          options={({ route, navigation }: any) => {
+          options={({ route }: any) => {
             const categoryName = route?.params?.name ?? (screen.options as any).headerTitle ?? screen.name;
             return {
               headerShown: screen.options.headerShown,
@@ -124,7 +158,9 @@ const App = () => {
                 fontSize: 20,
               },
               headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 25 }}>
+                <TouchableOpacity onPress={() => {
+                  navigation.navigate(screen.name as any);
+                }} style={{ paddingLeft: 25 }}>
                   <Leftarrow color="white" />
                 </TouchableOpacity>
               ),
@@ -137,7 +173,7 @@ const App = () => {
                 <TouchableOpacity onPress={() => console.log('Messageicon')} style={{ paddingRight: 25 }}>
                   <Message />
                 </TouchableOpacity>
-              ): undefined, // Only show wishlist icon on ProductDetail screen
+              ) : undefined, // Only show wishlist icon on ProductDetail screen
             };
           }}
         />

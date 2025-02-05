@@ -2,6 +2,10 @@ import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 import { COLORS, FONTS } from '../../themes/theme';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../routes/types';
+import { useData } from '../../context/DataContext/DataContext';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -22,33 +26,21 @@ const ArrivalscardData = [
     image: require('../../assets/Images/Houseplant.png'),
     backgroundColor: '#2f702a',
   },
-  {
-    title: 'Fiddle Leaf',
-    type: 'Indoor',
-    age: '1 Year',
-    price: '₹ 50.00',
-    image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
-  },
-  {
-    title: 'Fiddle Leaf',
-    type: 'Indoor',
-    age: '1 Year',
-    price: '₹ 50.00',
-    image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
-  },
-  {
-    title: 'Fiddle Leaf',
-    type: 'Indoor',
-    age: '1 Year',
-    price: '₹ 50.00',
-    image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
-  },
+  // Add more items as needed
 ];
 
+type NavigationProp = StackNavigationProp<RootStackParamList>;
+
 const Arrivals = () => {
+  const navigation = useNavigation<NavigationProp>();
+  const { setProductData } = useData();
+
+  const handleAddButtonPress = (item: typeof ArrivalscardData[0]) => {
+    // Set product data in context and navigate to ProductDetail
+    setProductData(item);
+    navigation.navigate("ProductDetail", { name: "Product Details" });
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -71,8 +63,12 @@ const Arrivals = () => {
               </View>
 
               {/* Add button */}
-              <TouchableOpacity style={styles.addButton} activeOpacity={ACTIVE_OPACITY}>
-               <Text style={styles.text}>ADD</Text>
+              <TouchableOpacity
+                onPress={() => handleAddButtonPress(item)} // Pass the item data here
+                style={styles.addButton}
+                activeOpacity={ACTIVE_OPACITY}
+              >
+                <Text style={styles.text}>ADD</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -102,8 +98,8 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: "column", // Align image and text side by side
-    marginHorizontal:5,
-    marginVertical:10
+    marginHorizontal: 5,
+    marginVertical: 10,
   },
   imageWrapper: {
     width: "100%",
@@ -149,14 +145,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 10,
-    zIndex:0,
-    padding:5
+    zIndex: 0,
+    padding: 5,
   },
   text: {
     fontSize: 16,
-    color:COLORS.primary,
-    textAlign:"center",
-    fontFamily:FONTS.AvenirDemi
+    color: COLORS.primary,
+    textAlign: "center",
+    fontFamily: FONTS.AvenirDemi,
   },
 });
 

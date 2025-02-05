@@ -3,6 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AppContext from './src/context/AppContext';
 import MainStack from './src/routes/MainStack';
 import SplashScreen from 'react-native-splash-screen';
+import { DataProvider } from './src/context/DataContext/DataContext';
 
 const App = (): React.JSX.Element => {
 
@@ -14,7 +15,9 @@ const App = (): React.JSX.Element => {
   return (
     <GestureHandlerRootView>
       <AppContext>
+        <DataProvider>
         <MainStack />
+        </DataProvider>
       </AppContext>
     </GestureHandlerRootView>
   );
