@@ -2,6 +2,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  ImageBackground,
   StyleSheet,
   Text,
   TextInput,
@@ -21,6 +22,7 @@ import { Divider } from '@rneui/themed';
 import Rightarrow from '../../assets/Icons/Rightarrow.svg';
 import Downarrow from '../../assets/Icons/Downarrow.svg';
 import DynamicText from '../../components/CustomText/DynamicText';
+import { useData } from '../../context/DataContext/DataContext';
 
 const { width } = Dimensions.get('window');
 const screenWidth = Dimensions.get('window').width;
@@ -42,7 +44,7 @@ const Search = () => {
       age: '6 Months',
       price: '₹ 40.25',
       image: require('../../assets/Images/Houseplant.png'),
-      backgroundColor: '#1c5e4a',
+      Backgroungimg: require('../../assets/Images/Bgimg1.png'),
     },
     {
       title: 'Fiddle Leaf',
@@ -50,7 +52,7 @@ const Search = () => {
       age: '1 Year',
       price: '₹ 50.00',
       image: require('../../assets/Images/Houseplant.png'),
-      backgroundColor: '#2f702a',
+      Backgroungimg: require('../../assets/Images/Bgimg2.png'),
     },
     {
       title: 'Aloe Vera',
@@ -58,7 +60,7 @@ const Search = () => {
       age: '2 Years',
       price: '₹ 30.00',
       image: require('../../assets/Images/Houseplant.png'),
-      backgroundColor: '#3a6e3a',
+      Backgroungimg: require('../../assets/Images/Bgimg1.png'),
     },
     {
       title: 'Aloe Vera',
@@ -66,7 +68,7 @@ const Search = () => {
       age: '2 Years',
       price: '₹ 30.00',
       image: require('../../assets/Images/Houseplant.png'),
-      backgroundColor: '#3a6e3a',
+      Backgroungimg: require('../../assets/Images/Bgimg2.png'),
     },
     {
       title: 'Aloe Vera',
@@ -74,7 +76,7 @@ const Search = () => {
       age: '2 Years',
       price: '₹ 30.00',
       image: require('../../assets/Images/Houseplant.png'),
-      backgroundColor: '#3a6e3a',
+      Backgroungimg: require('../../assets/Images/Bgimg1.png'),
     },
     {
       title: 'Aloe Vera',
@@ -82,13 +84,19 @@ const Search = () => {
       age: '2 Years',
       price: '₹ 30.00',
       image: require('../../assets/Images/Houseplant.png'),
-      backgroundColor: '#3a6e3a',
+      Backgroungimg: require('../../assets/Images/Bgimg2.png'),
     },
   ];
 
   const filteredData = ArrivalscardData.filter((item) =>
     item.title.toLowerCase().includes(searchText.toLowerCase())
   );
+  const { setProductData } = useData(); 
+  const handleAddButtonPress = (item: any) => {
+    console.log("Product Data:");
+    setProductData(item);
+    navigation.navigate('ProductDetail', { name: 'Product Details' });
+  };
 
   return (
     <View style={styles.container}>
@@ -185,17 +193,16 @@ const Search = () => {
             </View>
           </Collapsible>
         </View>
-      <View>
       <FlatList
         data={filteredData}
         numColumns={2}
         renderItem={({ item }) => (
-          <View
-            style={[
-              styles.cardContainer,
-              { backgroundColor: item.backgroundColor },
-            ]}
-          >
+          <ImageBackground
+                          // Use a static background image or, if you have a dynamic one, replace this with item.backgroundImage
+                          source={item.Backgroungimg}
+                          style={styles.cardContainer}
+                          imageStyle={{ borderRadius: 15 }} // This rounds the background image corners
+                        >
             <View style={styles.cardContent}>
               {/* Image */}
               <View style={styles.imageWrapper}>
@@ -212,16 +219,15 @@ const Search = () => {
               <TouchableOpacity
                 style={styles.addButton}
                 activeOpacity={ACTIVE_OPACITY}
-                onPress={()=> {navigation.navigate("ProductDetail", { name: "Product Details" })}}
+                onPress={() => handleAddButtonPress(item)}
               >
                 <Text style={styles.text}>ADD</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </ImageBackground>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-      </View>
     </View>
   );
 };

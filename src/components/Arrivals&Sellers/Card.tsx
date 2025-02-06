@@ -1,12 +1,16 @@
-import React, { useRef } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import PlusIcon from '../../assets/Icons/PlusVector.svg';
+import Minus from '../../assets/Icons/Divid.svg'
+import Plus from '../../assets/Icons/Plus.svg'
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/types';
-import { useData } from '../../context/DataContext/DataContext'; // Import useData
+import { useData } from '../../context/DataContext/DataContext';
+import LinearGradient from 'react-native-linear-gradient';
+
 
 type CardProps = {
   title: string;
@@ -14,52 +18,88 @@ type CardProps = {
   age: string;
   price: any;
   image: any;
-  backgroundColor: string;
+  Backgroundimg: any;
 };
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
-const Card: React.FC<CardProps> = ({ title, type, age, price, image, backgroundColor }) => {
+const Card: React.FC<CardProps> = ({ title, type, age, price, image, Backgroundimg }) => {
   const navigation = useNavigation<NavigationProp>();
-  const { setProductData } = useData(); // Use setProductData from context
-  const scrollViewRef = useRef<ScrollView>(null); // Create a reference for ScrollView
+  const { setProductData } = useData();
+  const scrollViewRef = useRef<ScrollView>(null);
 
-  const handleAddButtonPress = (item: any) => {
-    console.log("Product Data:");
-    setProductData(item);
-    
-    // Scroll to the top when the button is pressed
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ x: 0, y: 0, animated: true });
+  const [quantity, setQuantity] = useState(0);
+  const [showQuantity, setShowQuantity] = useState(false);
+
+  const handleAddButtonPress = () => {
+    setProductData({ title, type, age, price, image });
+    setShowQuantity(true);
+    setQuantity(1);
+  };
+
+  const handleIncreaseQuantity = () => setQuantity(prev => prev + 1);
+  const handleDecreaseQuantity = () => {
+    setQuantity(prev => (prev > 0 ? prev - 1 : 0));
+    if (quantity === 1) {
+      setShowQuantity(false);
     }
+  };
 
-    // Navigate to the product details page
+  const handleCardPress = () => {
     navigation.navigate("ProductDetail", { name: "Product Details" });
   };
 
   return (
     <ScrollView ref={scrollViewRef} contentContainerStyle={styles.scrollViewContent}>
-      <View style={[styles.cardContainer, { backgroundColor }]}>
-        <View style={styles.cardContent}>
-          {/* Image on the left side */}
-          <View style={styles.imageWrapper}>
-            <Image source={image} style={styles.image} />
-          </View>
+      <TouchableOpacity onPress={handleCardPress} activeOpacity={ACTIVE_OPACITY}>
+        <ImageBackground
+          // Use a static background image or, if you have a dynamic one, replace this with item.backgroundImage
+          source={Backgroundimg}
+          style={styles.cardContainer}
+          imageStyle={{ borderRadius: 15 }} // This rounds the background image corners
+        >
 
-          {/* Text content on the right side */}
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.subText}>{type}</Text>
-            <Text style={styles.subText}>{age}</Text>
-            <Text style={styles.price}>{price}</Text>
-          </View>
+          <View style={styles.cardContent}>
+            <View style={styles.imageWrapper}>
+              <Image source={image} style={styles.image} />
+            </View>
 
-          {/* Add button */}
-          <TouchableOpacity onPress={() => handleAddButtonPress({ title, type, age, price, image })} style={styles.addButton} activeOpacity={ACTIVE_OPACITY}>
-            <PlusIcon width={20} height={20} fill="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.subText}>{type}</Text>
+              <Text style={styles.subText}>{age}</Text>
+              <Text style={styles.price}>{price}</Text>
+            </View>
+
+            {showQuantity ? (
+              <LinearGradient
+                colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
+                style={styles.gradientBorder}
+              >
+
+                <View style={styles.quantityContainer}>
+                  {/* <Text style={styles.quantityText}>Qty:</Text> */}
+                  <TouchableOpacity style={styles.quantityButton} onPress={handleDecreaseQuantity}>
+                    <Minus width={25} height={25} fill={COLORS.white} />
+                  </TouchableOpacity>
+                  <Text style={styles.quantityText}>{quantity}</Text>
+                  <TouchableOpacity style={styles.quantityButton} onPress={handleIncreaseQuantity}>
+                    <Plus width={25} height={25} fill={COLORS.white} />
+                  </TouchableOpacity>
+                </View>
+              </LinearGradient>
+            ) : (
+              <TouchableOpacity
+                onPress={handleAddButtonPress}
+                style={styles.addButton}
+                activeOpacity={ACTIVE_OPACITY}
+              >
+                <PlusIcon width={20} height={20} fill="#fff" />
+              </TouchableOpacity>
+            )}
+          </View>
+          </ImageBackground>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -68,7 +108,7 @@ export default Card;
 
 const styles = StyleSheet.create({
   scrollViewContent: {
-    paddingTop: 10, // Adds some space at the top of the ScrollView
+    paddingTop: 10,
   },
   cardContainer: {
     width: 350,
@@ -132,5 +172,34 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 90,
     right: 10,
+  },
+  quantityContainer: {
+    flexDirection: 'row',
+    marginTop: "auto",
+    borderRadius: 5,
+    backgroundColor: COLORS.white,
+    padding: 3,
+  },
+  gradientBorder: {
+    borderRadius: 5,
+    padding: 2,
+    marginTop: 'auto',
+    marginBottom: 10,
+    marginHorizontal: 10
+
+  },
+  quantityButton: {
+    paddingVertical: 0,
+  },
+  quantityText: {
+    fontSize: 14,
+    marginHorizontal: 10,
+    color: COLORS.black,
+    marginVertical: 0,
+  },
+  heading: {
+    fontSize: 16,
+    color: COLORS.white,
+    marginRight: 10,
   },
 });

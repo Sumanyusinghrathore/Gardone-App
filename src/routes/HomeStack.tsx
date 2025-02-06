@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TabNavigation from '../screens/Tabs/Tabnavigation';
 import ProductDetail from '../screens/ProductDetails/ProductDetail';
 import { TouchableOpacity } from 'react-native';
@@ -132,6 +132,8 @@ export const screens = [
 
 ];
 
+
+
 const App = () => {
   const navigation = useNavigation<NavigationProp>();
   return (
@@ -159,7 +161,7 @@ const App = () => {
               },
               headerLeft: () => (
                 <TouchableOpacity onPress={() => {
-                  navigation.navigate(screen.name as any);
+                    navigation.goBack();
                 }} style={{ paddingLeft: 25 }}>
                   <Leftarrow color="white" />
                 </TouchableOpacity>

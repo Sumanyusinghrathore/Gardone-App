@@ -19,6 +19,8 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useData } from '../../context/DataContext/DataContext';
+import {useCart} from '../../context/CartContext/CartContext';
+
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -49,7 +51,7 @@ const ProductDetail = () => {
       age: '6 Months',
       price: '₹ 40.25',
       image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
-      backgroundColor: '#1c5e4a',
+      Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
     },
     {
       title: 'Fiddle Leaf',
@@ -57,7 +59,7 @@ const ProductDetail = () => {
       age: '1 Year',
       price: '₹ 50.00',
       image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
-      backgroundColor: '#2f702a',
+      Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
     },
     {
       title: 'Snake Plant',
@@ -65,17 +67,22 @@ const ProductDetail = () => {
       age: '8 Months',
       price: '₹ 35.50',
       image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
-      backgroundColor: '#4a8b3c',
+      Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
     },
   ];
   const { productData } = useData();
+  const { addToCart } = useCart();
+  const AddtoCart = (item:any) => {
+    addToCart(item);
+    navigation.navigate("Cart");
+  }
   return (
     <View style={styles.container}>
       <ScrollView>
         <Swiper
           style={styles.wrapper}
           showsButtons={false}
-          autoplay={false}
+          autoplay={true}
           autoplayTimeout={3}
           loop={true}
           dotStyle={styles.dotStyle}
@@ -98,7 +105,8 @@ const ProductDetail = () => {
             <Text style={styles.discountedPrice}>{productData?.price}</Text>
             <Text style={styles.price}>{productData?.price}</Text>
             <View style={styles.discountContainer}>
-              <Text style={styles.discountText}>{productData?.price}% OFF</Text>
+              {/* <Text style={styles.discountText}>{productData?.price}% OFF</Text> */}
+              <Text style={styles.discountText}>25% OFF</Text>
             </View>
           </View>
           <Text style={styles.heading}>Product Name</Text>
@@ -380,7 +388,7 @@ const ProductDetail = () => {
                 age={item.age}
                 price={item.price}
                 image={item.image}
-                backgroundColor={item.backgroundColor}
+                Backgroundimg={item.Backgroungimg}
               />
             ))}
           </ScrollView>
@@ -400,14 +408,14 @@ const ProductDetail = () => {
                 age={item.age}
                 price={item.price}
                 image={item.image}
-                backgroundColor={item.backgroundColor}
+                Backgroundimg={item.Backgroungimg}
               />
             ))}
           </ScrollView>
         </View>
       </ScrollView>
       <View style={styles.bottomContainer}>
-        <TouchableOpacity style={styles.buyNowButton} onPress={() => (navigation.navigate("Cart"))}>
+        <TouchableOpacity style={styles.buyNowButton} onPress={() => (AddtoCart(productData))}>
           <Text style={styles.buyNowText}>Buy Now</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.addToCartButton} onPress={() => (navigation.navigate("Cart"))}>

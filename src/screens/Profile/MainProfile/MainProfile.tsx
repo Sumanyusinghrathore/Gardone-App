@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback } from 'react-native';
 import Profile from '../../../assets/Icons/Main_Profile.svg';
 import History from '../../../assets/Icons/Main_Order_History.svg';
 import Privacy from '../../../assets/Icons/Privacy_Policy.svg';
@@ -13,47 +13,14 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { ACTIVE_OPACITY } from '../../../themes/genericStyles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../routes/types';
-import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigationStateType, useApp } from '../../../context/AppContext';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
-
-interface LogoutModalProps {
-  isVisible: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-}
-
-const LogoutModal: React.FC<LogoutModalProps> = ({ isVisible, onClose, onConfirm }) => {
-  return (
-    <Modal
-      isVisible={isVisible}
-      onBackdropPress={onClose} // Closes modal when tapping outside
-      animationIn="fadeIn"
-      animationOut="fadeOut"
-      backdropOpacity={0.5}
-    >
-      <View style={styles.modalContainer}>
-        <Text style={styles.modalTitle}>Log Out</Text>
-        <Text style={styles.modalText}>Are you sure you want to log out?</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-            <Text style={styles.cancelText}>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
-            <Text style={styles.confirmText}>Yes, Logout</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
-  );
-};
-
 const MainProfile = () => {
   const navigation = useNavigation<NavigationProp>();
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const pickImage = async () => {
     launchImageLibrary({ mediaType: 'photo', quality: 1 }, (response) => {
@@ -70,9 +37,13 @@ const MainProfile = () => {
       }
     });
   };
+
+
+
+
   const appContext = useApp();
-  const handleLogout =  async () => {
-    setModalVisible(false);
+  const handleLogout = async () => {
+    setIsVisible(false);
     try {
       // Clear the user data from AsyncStorage
       await AsyncStorage.removeItem('userData');
@@ -81,11 +52,13 @@ const MainProfile = () => {
       // Update navigation state to AUTH
       appContext?.setNavigationState(navigationStateType.AUTH);
       console.log("Navigating to AUTH state");
-      
+
     } catch (error) {
       console.error("Error during logout:", error);
     }
   };
+
+  const handleClose = () => setIsVisible(false);
 
   const menuItems = [
     { icon: <Profile width={40} height={40} />, label: 'Profile', action: () => navigation.navigate("UpdateProfile") },
@@ -93,7 +66,7 @@ const MainProfile = () => {
     { icon: <Privacy width={40} height={40} />, label: 'Privacy Policy', action: () => navigation.navigate("Privacy") },
     { icon: <Settings width={40} height={40} />, label: 'Settings', action: () => navigation.navigate("Setting") },
     { icon: <Help width={40} height={40} />, label: 'Help', action: () => navigation.navigate("Help") },
-    { icon: <Logout width={40} height={40} />, label: 'Logout', action: () => setModalVisible(true) },
+    { icon: <Logout width={40} height={40} />, label: 'Logout', action: () => setIsVisible(true) },
   ];
 
   return (
@@ -113,7 +86,27 @@ const MainProfile = () => {
           </TouchableOpacity>
         ))}
       </View>
-      <LogoutModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} onConfirm={handleLogout} />
+      <Modal
+        visible={isVisible}
+        onRequestClose={handleClose} // Closes modal when tapping outside
+        animationType='fade'
+        backdropColor='rgba(255, 255, 255, 0.1)' // White with 50% opacity
+      >
+        <TouchableWithoutFeedback onPress={handleClose}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>Log Out</Text>
+          <Text style={styles.modalText}>Are you sure you want to log out?</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.cancelButton} onPress={handleClose}>
+              <Text style={styles.cancelText}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.confirmButton} onPress={handleLogout}>
+              <Text style={styles.confirmText}>Yes, Logout</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 };
@@ -172,27 +165,32 @@ const styles = StyleSheet.create({
     color: COLORS.HeadingColor,
   },
   modalContainer: {
-    backgroundColor: 'white',
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
+    height:200,
+    marginTop:'auto',
+    marginBottom:'auto'
   },
   modalTitle: {
     fontSize: 18,
-    fontFamily:FONTS.AvenirDemi,
-    color:COLORS.HeadingColor
+    fontFamily: FONTS.AvenirDemi,
+    color: COLORS.HeadingColor
   },
   modalText: {
     fontSize: 14,
-    fontFamily:FONTS.AvenirThin,
-    color:COLORS.HeadingColor,
+    fontFamily: FONTS.AvenirThin,
+    color: COLORS.HeadingColor,
     marginVertical: 10
   },
   buttonContainer: {
     flexDirection: 'row',
     marginTop: 20,
     width: '100%',
-    marginHorizontal:10
+    marginHorizontal: 10
   },
   cancelButton: {
     backgroundColor: COLORS.white,
@@ -218,5 +216,5 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     textAlign: 'center',
     fontFamily: FONTS.AvenirDemi,
-  },  
+  },
 });

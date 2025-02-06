@@ -20,7 +20,6 @@ import CoupanIcon from '../../assets/Icons/coupon-line.svg';
 import Righticon from '../../assets/Icons/ep_right.svg';
 import { Divider } from '@rneui/themed';
 import DynamicText from '../../components/CustomText/DynamicText';
-
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const Cart = () => {

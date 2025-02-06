@@ -6,6 +6,7 @@ import DynamicText from '../../components/CustomText/DynamicText'
 import Slider from '@react-native-community/slider'
 import { Divider } from '@rneui/themed'
 import { ACTIVE_OPACITY } from '../../themes/genericStyles'
+import { ScrollView } from 'react-native-gesture-handler'
 
 type CheckboxKey = 'airPlant' | 'floweringPlant' | 'focalPlants' | "GroundsCovers" | "Creepers"
 type SortByKey = 'popularity' | 'customerRating' | 'discount'
@@ -74,7 +75,8 @@ const Filter = () => {
 
   return (
     <View style={styles.container}>
-      <DynamicText content="Price" />
+    <ScrollView>
+    <DynamicText content="Price" />
       <Text style={styles.header}>Selected Range</Text>
       <View style={styles.progressBarContainer}>
         <View style={styles.sliderContainer}>
@@ -124,6 +126,7 @@ const Filter = () => {
           <Text style={styles.buttonText}>Apply</Text>
         </TouchableOpacity>
       </View>
+    </ScrollView>
     </View>
   )
 }
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingVertical:20
   },
   header: {
     fontSize: 16,
@@ -179,8 +183,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    position: 'absolute',
-    bottom: 15,
+    position: 'relative',
+    bottom: 10,
     marginHorizontal: 25
   },
   button: {

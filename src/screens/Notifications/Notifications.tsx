@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import React from 'react'
 import { Divider } from '@rneui/themed';
-import { COLORS, FONTS } from '../../themes/theme';
+import { COLORS, FONTS, SIZES } from '../../themes/theme';
 
 
 const notificationsData = [
@@ -62,6 +62,7 @@ export default Notifications;
 
 const styles = StyleSheet.create({
   notificationContainer: {
+    backgroundColor: 'white', // Explicit white background
     paddingHorizontal: 20,
     paddingVertical: 15,
     flex: 1,  // Ensure the container fills available space
@@ -72,12 +73,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   notificationTitle: {
-    fontSize: 16,
+    fontSize: SIZES.body4,
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirBold,
   },
   notificationTime: {
-    fontSize: 12,
+    fontSize: SIZES.body5,
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirRegular,
   },
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
     color: COLORS.HeadingColor,
     fontFamily: FONTS.AvenirRegular,
     marginVertical: 5,
-    flexWrap: 'wrap',  // Ensure content wraps to the next line if it's too long
-    width: '100%', // Let content take full width
+    flexWrap: 'wrap',
+    width: '100%',
   },
   dividercontainer: {
     borderColor: COLORS.MoodyBlue,

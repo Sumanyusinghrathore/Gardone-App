@@ -4,6 +4,7 @@ import AppContext from './src/context/AppContext';
 import MainStack from './src/routes/MainStack';
 import SplashScreen from 'react-native-splash-screen';
 import { DataProvider } from './src/context/DataContext/DataContext';
+import { CartProvider } from './src/context/CartContext/CartContext';
 
 const App = (): React.JSX.Element => {
 
@@ -15,9 +16,11 @@ const App = (): React.JSX.Element => {
   return (
     <GestureHandlerRootView>
       <AppContext>
+        <CartProvider>
         <DataProvider>
         <MainStack />
         </DataProvider>
+        </CartProvider>
       </AppContext>
     </GestureHandlerRootView>
   );

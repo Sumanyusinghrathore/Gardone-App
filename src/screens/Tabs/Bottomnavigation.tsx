@@ -69,7 +69,7 @@ const App = () => {
                 fontSize: 20,
               },
               headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.navigate(screen.name as any)} style={{ paddingLeft: 25 }}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 25 }}>
                   <Icnicons color="white" />
                 </TouchableOpacity>
               ),

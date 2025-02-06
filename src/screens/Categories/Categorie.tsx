@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Import React Navigation hooks
 import { COLORS, FONTS } from '../../themes/theme';
 import { RootStackParamList } from '../../routes/types';
@@ -9,6 +9,9 @@ import PlusIcon from '../../assets/Icons/PlusVector.svg';
 import { Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useData } from '../../context/DataContext/DataContext';
+import LinearGradient from 'react-native-linear-gradient';
+import Minus from '../../assets/Icons/Divid.svg'
+import Plus from '../../assets/Icons/Plus.svg'
 
 const { width: screenWidth } = Dimensions.get('window');
 type RouteParams = RouteProp<RootStackParamList, 'Categorie'>;
@@ -21,7 +24,7 @@ const ArrivalscardData = [
     age: '6 Months',
     price: '₹ 40.25',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#1c5e4a',
+    Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
   },
   {
     title: 'Fiddle Leaf',
@@ -29,7 +32,7 @@ const ArrivalscardData = [
     age: '1 Year',
     price: '₹ 50.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
+    Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
   },
   {
     title: 'Fiddle Leaf',
@@ -37,7 +40,7 @@ const ArrivalscardData = [
     age: '1 Year',
     price: '₹ 50.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
+    Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
   },
   {
     title: 'Fiddle Leaf',
@@ -45,7 +48,7 @@ const ArrivalscardData = [
     age: '1 Year',
     price: '₹ 50.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
+    Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
   },
   {
     title: 'Fiddle Leaf',
@@ -53,7 +56,7 @@ const ArrivalscardData = [
     age: '1 Year',
     price: '₹ 50.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
+    Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
   },
   {
     title: 'Fiddle Leaf',
@@ -61,7 +64,7 @@ const ArrivalscardData = [
     age: '1 Year',
     price: '₹ 50.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#2f702a',
+    Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
   },
   {
     title: 'Snake Plant',
@@ -69,7 +72,7 @@ const ArrivalscardData = [
     age: '8 Months',
     price: '₹ 35.50',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#4a8b3c',
+    Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
   },
   {
     title: 'Succulent Pot',
@@ -77,7 +80,7 @@ const ArrivalscardData = [
     age: 'New',
     price: '₹ 25.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#b4c94c',
+    Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
   },
   {
     title: 'Organic Fertilizer',
@@ -85,7 +88,7 @@ const ArrivalscardData = [
     age: 'New',
     price: '₹ 15.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#ff8c00',
+    Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
   },
   {
     title: 'Organic Fertilizer',
@@ -93,7 +96,7 @@ const ArrivalscardData = [
     age: 'New',
     price: '₹ 15.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#ff8c00',
+    Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
   },
   {
     title: 'Organic Fertilizer',
@@ -101,7 +104,7 @@ const ArrivalscardData = [
     age: 'New',
     price: '₹ 15.00',
     image: require('../../assets/Images/Houseplant.png'),
-    backgroundColor: '#ff8c00',
+    Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
   },
 ];
 
@@ -112,6 +115,8 @@ const ArrivalscardData = [
 const Categorie = () => {
   const route = useRoute<RouteParams>(); // Type the route hook with RouteParams
   const categoryName = route.params?.name;
+  const [quantity, setQuantity] = useState(0);
+  const [showQuantity, setShowQuantity] = useState(false);
   const navigation = useNavigation<NavigationProp>();
   const { setProductData } = useData();  // Use setProductData from context
   useEffect(() => {
@@ -124,10 +129,24 @@ const Categorie = () => {
   const filteredData = ArrivalscardData.filter(item =>
     item.type.toLowerCase() === categoryName?.toLocaleLowerCase()
   );
-  const handleAddButtonPress = (item: any) => {
+  const handleCardPress = (item: any) => {
     console.log("Product Data:");
     setProductData(item);
     navigation.navigate('ProductDetail', { name: 'Product Details' });
+  };
+
+  const handleAddButtonPress = (item: any) => {
+    setProductData(item);
+    setShowQuantity(true);
+    setQuantity(1);
+  };
+
+  const handleIncreaseQuantity = () => setQuantity(prev => prev + 1);
+  const handleDecreaseQuantity = () => {
+    setQuantity(prev => (prev > 0 ? prev - 1 : 0));
+    if (quantity === 1) {
+      setShowQuantity(false);
+    }
   };
 
   return (
@@ -136,7 +155,10 @@ const Categorie = () => {
       <FlatList
         data={filteredData}
         renderItem={({ item }) => (
-          <View style={[styles.cardContainer, { backgroundColor: item.backgroundColor }]}>
+          <TouchableOpacity onPress={handleCardPress} activeOpacity={ACTIVE_OPACITY}>
+          <ImageBackground source={item.Backgroungimg}
+        style={styles.cardContainer}
+        imageStyle={{ borderRadius: 15 }}>
             <View style={styles.cardContent}>
               {/* Image on the left side */}
               <View style={styles.imageWrapper}>
@@ -152,15 +174,35 @@ const Categorie = () => {
               </View>
 
               {/* Add button */}
-              <TouchableOpacity
-                onPress={() => handleAddButtonPress(item)}
-                style={styles.addButton}
+              {showQuantity ? (
+              <LinearGradient
+                              colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
+                              style={styles.gradientBorder}
+                            >
+                              
+              <View style={styles.quantityContainer}>
+                {/* <Text style={styles.quantityText}>Qty:</Text> */}
+                <TouchableOpacity style={styles.quantityButton} onPress={handleDecreaseQuantity}>
+                  <Minus width={25} height={25} fill={COLORS.white} />
+                </TouchableOpacity>
+                <Text style={styles.quantityText}>{quantity}</Text>
+                <TouchableOpacity style={styles.quantityButton} onPress={handleIncreaseQuantity}>
+                  <Plus width={25} height={25} fill={COLORS.white} />
+                </TouchableOpacity>
+              </View>
+              </LinearGradient>
+            ) : (
+              <TouchableOpacity 
+                onPress={handleAddButtonPress} 
+                style={styles.addButton} 
                 activeOpacity={ACTIVE_OPACITY}
               >
                 <PlusIcon width={20} height={20} fill="#fff" />
               </TouchableOpacity>
+            )}
             </View>
-          </View>
+          </ImageBackground>
+          </TouchableOpacity>
         )}
       />
     </View>
@@ -247,6 +289,30 @@ const styles = StyleSheet.create({
   addButtonText: {
     fontSize: 20,
     color: COLORS.primary,
+  },
+  quantityContainer: {
+    flexDirection: 'row',
+    marginTop: "auto",
+    borderRadius: 5,
+    backgroundColor: COLORS.white,
+    padding: 3,
+  },
+  gradientBorder: {
+    borderRadius: 5,
+    padding: 2,
+    marginTop:'auto',
+    marginBottom:10,
+    marginHorizontal:10
+    
+  },
+  quantityButton: {
+    paddingVertical: 0,
+  },
+  quantityText: {
+    fontSize: 14,
+    marginHorizontal: 10,
+    color: COLORS.black,
+    marginVertical: 0,
   },
 });
 

@@ -56,7 +56,7 @@ const HomeScreen = () => {
       age: '6 Months',
       price: '₹ 40.25',
       image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
-      backgroundColor: '#1c5e4a',
+      Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
     },
     {
       title: 'Fiddle Leaf',
@@ -64,7 +64,7 @@ const HomeScreen = () => {
       age: '1 Year',
       price: '₹ 50.00',
       image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
-      backgroundColor: '#2f702a',
+      Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
     },
     {
       title: 'Snake Plant',
@@ -72,7 +72,7 @@ const HomeScreen = () => {
       age: '8 Months',
       price: '₹ 35.50',
       image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
-      backgroundColor: '#4a8b3c',
+      Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
     },
   ];
 
@@ -199,7 +199,7 @@ const HomeScreen = () => {
               age={item.age}
               price={item.price}
               image={item.image}
-              backgroundColor={item.backgroundColor}
+              Backgroundimg={item.Backgroungimg}
             />
           ))}
         </ScrollView>
@@ -222,7 +222,7 @@ const HomeScreen = () => {
               age={item.age}
               price={item.price}
               image={item.image}
-              backgroundColor={item.backgroundColor}
+              Backgroundimg={item.Backgroungimg}
             />
           ))}
         </ScrollView>
