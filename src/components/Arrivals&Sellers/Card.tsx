@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import PlusIcon from '../../assets/Icons/PlusVector.svg';
-import Minus from '../../assets/Icons/Divid.svg'
-import Plus from '../../assets/Icons/Plus.svg'
+import Minus from '../../assets/Icons/Divid.svg';
+import Plus from '../../assets/Icons/Plus.svg';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
 import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import { useNavigation } from '@react-navigation/native';
@@ -11,8 +11,8 @@ import { RootStackParamList } from '../../routes/types';
 import { useData } from '../../context/DataContext/DataContext';
 import LinearGradient from 'react-native-linear-gradient';
 
-
 type CardProps = {
+  index: any; // Added index prop to identify the card in the context
   title: string;
   type: string;
   age: string;
@@ -23,42 +23,44 @@ type CardProps = {
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
-const Card: React.FC<CardProps> = ({ title, type, age, price, image, Backgroundimg }) => {
+const Card: React.FC<CardProps> = ({
+  index,
+  title,
+  type,
+  age,
+  price,
+  image,
+  Backgroundimg,
+}) => {
   const navigation = useNavigation<NavigationProp>();
-  const { setProductData } = useData();
+  const {
+    handleAddButtonPress,
+    handleIncreaseQuantity,
+    handleDecreaseQuantity,
+    cardQuantities,
+  } = useData();
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const [quantity, setQuantity] = useState(0);
-  const [showQuantity, setShowQuantity] = useState(false);
-
-  const handleAddButtonPress = () => {
-    setProductData({ title, type, age, price, image });
-    setShowQuantity(true);
-    setQuantity(1);
-  };
-
-  const handleIncreaseQuantity = () => setQuantity(prev => prev + 1);
-  const handleDecreaseQuantity = () => {
-    setQuantity(prev => (prev > 0 ? prev - 1 : 0));
-    if (quantity === 1) {
-      setShowQuantity(false);
-    }
-  };
-
+  // Navigate to the product details screen
   const handleCardPress = () => {
     navigation.navigate("ProductDetail", { name: "Product Details" });
   };
+
+  // Get the current quantity for this card from the context.
+  const quantity = cardQuantities[index] || 0;
+  const showQuantity = quantity > 0;
+
+  // Create an object representing the item data (you can adjust this to suit your needs)
+  const itemData = { title, type, age, price, image, Backgroundimg };
 
   return (
     <ScrollView ref={scrollViewRef} contentContainerStyle={styles.scrollViewContent}>
       <TouchableOpacity onPress={handleCardPress} activeOpacity={ACTIVE_OPACITY}>
         <ImageBackground
-          // Use a static background image or, if you have a dynamic one, replace this with item.backgroundImage
           source={Backgroundimg}
           style={styles.cardContainer}
-          imageStyle={{ borderRadius: 15 }} // This rounds the background image corners
+          imageStyle={{ borderRadius: 15 }} // Rounds the background image corners
         >
-
           <View style={styles.cardContent}>
             <View style={styles.imageWrapper}>
               <Image source={image} style={styles.image} />
@@ -76,21 +78,25 @@ const Card: React.FC<CardProps> = ({ title, type, age, price, image, Backgroundi
                 colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
                 style={styles.gradientBorder}
               >
-
                 <View style={styles.quantityContainer}>
-                  {/* <Text style={styles.quantityText}>Qty:</Text> */}
-                  <TouchableOpacity style={styles.quantityButton} onPress={handleDecreaseQuantity}>
+                  <TouchableOpacity
+                    style={styles.quantityButton}
+                    onPress={() => handleDecreaseQuantity(index)}
+                  >
                     <Minus width={25} height={25} fill={COLORS.white} />
                   </TouchableOpacity>
                   <Text style={styles.quantityText}>{quantity}</Text>
-                  <TouchableOpacity style={styles.quantityButton} onPress={handleIncreaseQuantity}>
+                  <TouchableOpacity
+                    style={styles.quantityButton}
+                    onPress={() => handleIncreaseQuantity(index)}
+                  >
                     <Plus width={25} height={25} fill={COLORS.white} />
                   </TouchableOpacity>
                 </View>
               </LinearGradient>
             ) : (
               <TouchableOpacity
-                onPress={handleAddButtonPress}
+                onPress={() => handleAddButtonPress(itemData, index)}
                 style={styles.addButton}
                 activeOpacity={ACTIVE_OPACITY}
               >
@@ -98,7 +104,7 @@ const Card: React.FC<CardProps> = ({ title, type, age, price, image, Backgroundi
               </TouchableOpacity>
             )}
           </View>
-          </ImageBackground>
+        </ImageBackground>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -175,18 +181,17 @@ const styles = StyleSheet.create({
   },
   quantityContainer: {
     flexDirection: 'row',
-    marginTop: "auto",
+    marginTop: 'auto',
     borderRadius: 5,
     backgroundColor: COLORS.white,
-    padding: 3,
+    padding: 2,
   },
   gradientBorder: {
     borderRadius: 5,
     padding: 2,
     marginTop: 'auto',
     marginBottom: 10,
-    marginHorizontal: 10
-
+    marginHorizontal: 5,
   },
   quantityButton: {
     paddingVertical: 0,

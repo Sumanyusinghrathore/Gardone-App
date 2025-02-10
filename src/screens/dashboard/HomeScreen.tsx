@@ -38,7 +38,6 @@ const HomeScreen = () => {
   };
   const handleSearch = () => {
     navigation.navigate("Search", { name: "Search" });
-    console.log('Search text:', searchText);
   };
   const categories = [
     { id: '1', name: 'Indoor', image: require('../../assets/Images/Indoor.png') },
@@ -94,7 +93,6 @@ const HomeScreen = () => {
     },
   ];
 
-
   const renderCategoryCard = ({ item }: { item: { id: string; name: string; image: any } }) => (
     <TouchableOpacity
       onPress={() =>
@@ -107,7 +105,6 @@ const HomeScreen = () => {
       <Text style={styles.categoryText}>{item.name}</Text>
     </TouchableOpacity>
   );
-
 
   return (
     <ScrollView style={styles.container}>
@@ -191,17 +188,21 @@ const HomeScreen = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollContainer}
         >
-          {ArrivalscardData.map((item, index) => (
-            <Card
-              key={index} // Unique key for each card
-              title={item.title}
-              type={item.type}
-              age={item.age}
-              price={item.price}
-              image={item.image}
-              Backgroundimg={item.Backgroungimg}
-            />
-          ))}
+          {ArrivalscardData.map((item, index) => {
+              const uniqueKey = `Arrivals-${index}`; // Create a unique key
+              return (
+                <Card
+                  key={uniqueKey}
+                  index={uniqueKey}
+                  title={item.title}
+                  type={item.type}
+                  age={item.age}
+                  price={item.price}
+                  image={item.image}
+                  Backgroundimg={item.Backgroungimg}
+                />
+              );
+            })}
         </ScrollView>
         <View style={styles.sectionHeader}>
           <DynamicText content="Best Sellers" />
@@ -214,17 +215,21 @@ const HomeScreen = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollContainer}
         >
-          {ArrivalscardData.map((item, index) => (
-            <Card
-              key={index} // Unique key for each card
-              title={item.title}
-              type={item.type}
-              age={item.age}
-              price={item.price}
-              image={item.image}
-              Backgroundimg={item.Backgroungimg}
-            />
-          ))}
+          {ArrivalscardData.map((item, index) => {
+              const uniqueKey = `Sellers-${index}`; // Create a unique key
+              return (
+                <Card
+                  key={uniqueKey}
+                  index={uniqueKey}
+                  title={item.title}
+                  type={item.type}
+                  age={item.age}
+                  price={item.price}
+                  image={item.image}
+                  Backgroundimg={item.Backgroungimg}
+                />
+              );
+            })}
         </ScrollView>
         <View style={styles.gradientcontainer}>
           <Image
@@ -237,7 +242,6 @@ const HomeScreen = () => {
             end={{ x: 1, y: 0 }}    // End at the right
             style={styles.gradient}
           >
-
             <View style={styles.overlaptextContainer}>
               <Text style={styles.overlaptext}>"Healthy plants thrive with our expert care and attention."</Text>
               <TouchableOpacity style={styles.overlapknowmoreButton} activeOpacity={ACTIVE_OPACITY}>
@@ -521,7 +525,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   featureItem: {
-    width: width / 2 - 25,
+    width: width / 2 - 30,
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 15

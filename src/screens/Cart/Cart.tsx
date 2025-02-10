@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -21,13 +21,15 @@ import Righticon from '../../assets/Icons/ep_right.svg';
 import { Divider } from '@rneui/themed';
 import DynamicText from '../../components/CustomText/DynamicText';
 type NavigationProp = StackNavigationProp<RootStackParamList>;
+import { useData } from '../../context/DataContext/DataContext';
 
 const Cart = () => {
   const navigation = useNavigation<NavigationProp>();
+  const { handleIncreaseQuantity, handleDecreaseQuantity} = useData();
   const [products, setProducts] = useState([
     {
       id: 1,
-      title: 'Monstera Plant',
+      title: 'Monstera',
       description: 'Select Planter: Lotus Bowl',
       age: 'Plant Age: 1 Month',
       price: 400.25,
@@ -53,6 +55,8 @@ const Cart = () => {
       image: require('../../assets/Images/Product_details.png'),
     },
   ]);
+
+  
   const calculateTotalPrice = () => {
     return products.reduce((total, product) => total + product.price * product.quantity, 0);
   };
@@ -68,39 +72,18 @@ const Cart = () => {
     return total - discount; // No delivery charges in this example
   };
 
-
-  const increment = (id: number) => {
-    setProducts((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  const decrement = (id: number) => {
-    setProducts((prev) =>
-      prev.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
   const removeProduct = (id: number) => {
     setProducts((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const renderProduct = ({ item }: { item: typeof products[0] }) => (
+  const renderProduct = ({ item }: { item: any }) => (
     <LinearGradient
       colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
-      style={styles.gradientCard}
-    >
+      style={styles.gradientCard}>
       <View style={styles.cardContent}>
-        <Image source={item.image} style={styles.image} />
-
+        <Image source={item.image} style={styles.image}/>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.title}>{item.title || "No Title"}</Text>
           <Text style={styles.description}>{item.description}</Text>
           <Text style={styles.description}>{item.age}</Text>
           <View style={styles.pricecontainer}>
@@ -113,16 +96,14 @@ const Cart = () => {
               >
                 <View style={styles.quantityBox}>
                   <TouchableOpacity
-                    onPress={() => decrement(item.id)}
-                    style={styles.button}
-                  >
+                    onPress={() => handleDecreaseQuantity(item.id)}
+                    style={styles.button}>
                     <Text style={styles.buttonText}>-</Text>
                   </TouchableOpacity>
                   <Text style={styles.quantityText}>{item.quantity}</Text>
                   <TouchableOpacity
-                    onPress={() => increment(item.id)}
-                    style={styles.button}
-                  >
+                    onPress={() => handleIncreaseQuantity(item.id)}
+                    style={styles.button}>
                     <Text style={styles.buttonText}>+</Text>
                   </TouchableOpacity>
                 </View>
@@ -222,13 +203,14 @@ const Cart = () => {
 
   return (
     <FlatList
-      data={products}
+      data={products} // Ensure it's an array
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderProduct}
       ListHeaderComponent={renderHeader}
       ListFooterComponent={renderFooter}
       contentContainerStyle={styles.container}
     />
+
   );
 };
 
@@ -285,7 +267,7 @@ const styles = StyleSheet.create({
     height: width * 0.2,
     borderRadius: 5,
     marginRight: 15,
-    resizeMode:'center'
+    resizeMode: 'center'
   },
   textContainer: {
     flex: 1,
@@ -455,11 +437,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   iconContainer: {
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
   },
-  Righticon:{
-    top:5,
-    bottom:5
+  Righticon: {
+    top: 5,
+    bottom: 5
   },
   dividercontainer: {
     borderColor: COLORS.white,

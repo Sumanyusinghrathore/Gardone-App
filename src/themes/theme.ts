@@ -1,5 +1,5 @@
 import {Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 
 // Function to scale font size based on screen width
@@ -40,8 +40,6 @@ export const COLORS = {
   buttontext:'#154E3B',
   cardbgcolor:'#EAF6E4',
   linecolor:"#C6C6C6",
-
-
   lightGray: '#F5F5F6',
   lightGray2: '#DCDCDC',
   transparent: 'transparent',

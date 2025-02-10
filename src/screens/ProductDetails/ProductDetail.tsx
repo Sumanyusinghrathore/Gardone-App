@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { COLORS, FONTS, SIZES } from '../../themes/theme';
 import Swiper from 'react-native-swiper';
 import Star from '../../assets/Icons/Star.svg';
@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useData } from '../../context/DataContext/DataContext';
-import {useCart} from '../../context/CartContext/CartContext';
+import { useCart } from '../../context/CartContext/CartContext';
 
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
@@ -70,9 +70,35 @@ const ProductDetail = () => {
       Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
     },
   ];
+  const SimilarProduct = [
+    {
+      title: 'Monstera',
+      type: 'Outdoor',
+      age: '6 Months',
+      price: '₹ 40.25',
+      image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
+      Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
+    },
+    {
+      title: 'Fiddle Leaf',
+      type: 'Indoor',
+      age: '1 Year',
+      price: '₹ 50.00',
+      image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
+      Backgroungimg: require('../../assets/Images/Horizontalbg2.png'),
+    },
+    {
+      title: 'Snake Plant',
+      type: 'Low Light',
+      age: '8 Months',
+      price: '₹ 35.50',
+      image: require('../../assets/Images/Houseplant.png'), // Replace with your image path
+      Backgroungimg: require('../../assets/Images/Horizontalbg1.png'),
+    },
+  ];
   const { productData } = useData();
   const { addToCart } = useCart();
-  const AddtoCart = (item:any) => {
+  const AddtoCart = (item: any) => {
     addToCart(item);
     navigation.navigate("Cart");
   }
@@ -375,22 +401,26 @@ const ProductDetail = () => {
         <View style={{ marginTop: 15 }}>
           <DynamicText content="Frequently Bought Together" />
           <ScrollView
-          ref={scrollViewRef}
+            ref={scrollViewRef}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.scrollContainer}
           >
-            {ArrivalscardData.map((item, index) => (
-              <Card
-                key={index} // Unique key for each card
-                title={item.title}
-                type={item.type}
-                age={item.age}
-                price={item.price}
-                image={item.image}
-                Backgroundimg={item.Backgroungimg}
-              />
-            ))}
+            {ArrivalscardData.map((item, index) => {
+              const uniqueKey = `Arrivals-${index}`; // Create a unique key
+              return (
+                <Card
+                  key={uniqueKey}
+                  index={uniqueKey}
+                  title={item.title}
+                  type={item.type}
+                  age={item.age}
+                  price={item.price}
+                  image={item.image}
+                  Backgroundimg={item.Backgroungimg}
+                />
+              );
+            })}
           </ScrollView>
         </View>
         <View style={{ marginTop: 15 }}>
@@ -400,17 +430,21 @@ const ProductDetail = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.scrollContainer}
           >
-            {ArrivalscardData.map((item, index) => (
-              <Card
-                key={index} // Unique key for each card
-                title={item.title}
-                type={item.type}
-                age={item.age}
-                price={item.price}
-                image={item.image}
-                Backgroundimg={item.Backgroungimg}
-              />
-            ))}
+            {SimilarProduct.map((item, index) => {
+              const uniqueKey = `Similar-${index}`; // Create a unique key
+              return (
+                <Card
+                  key={uniqueKey}
+                  index={uniqueKey}
+                  title={item.title}
+                  type={item.type}
+                  age={item.age}
+                  price={item.price}
+                  image={item.image}
+                  Backgroundimg={item.Backgroungimg}
+                />
+              );
+            })}
           </ScrollView>
         </View>
       </ScrollView>

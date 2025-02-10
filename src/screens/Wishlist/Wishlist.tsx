@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Dimensions, ImageBackground } from 'react-native';
 import { COLORS, FONTS } from '../../themes/theme';
 import { ACTIVE_OPACITY } from '../../themes/genericStyles';
@@ -59,34 +59,12 @@ type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const Wishlist = () => {
   const navigation = useNavigation<NavigationProp>();
-  const { setProductData } = useData();
+  const { setProductData, cardQuantities, handleAddButtonPress, handleIncreaseQuantity, handleDecreaseQuantity } = useData();
 
   // Maintain a mapping from card index to its current quantity.
   // If a card does not have an entry or the value is 0, we show the "ADD" button.
-  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 
-  // When the user taps "ADD", set the card's quantity to 1.
-  const handleAddButtonPress = (item: any, index: number) => {
-    setProductData(item);
-    setQuantities(prev => ({ ...prev, [index]: 1 }));
-  };
-
-  const handleIncreaseQuantity = (index: number) => {
-    setQuantities(prev => ({ ...prev, [index]: (prev[index] || 0) + 1 }));
-  };
-
-  const handleDecreaseQuantity = (index: number) => {
-    setQuantities(prev => {
-      const current = prev[index] || 0;
-      if (current <= 1) {
-        // Remove the quantity entry to show "ADD" again.
-        const updated = { ...prev };
-        delete updated[index];
-        return updated;
-      }
-      return { ...prev, [index]: current - 1 };
-    });
-  };
+  // When the user taps "ADD", set the card's quantity to 1
 
   return (
     <View style={styles.container}>
@@ -95,13 +73,13 @@ const Wishlist = () => {
         numColumns={2}
         renderItem={({ item, index }) => {
           // Check if this card has a quantity > 0
-          const quantity = quantities[index] || 0;
+          const quantity = cardQuantities[index] || 0;
           const showQuantity = quantity > 0;
           return (
             <TouchableOpacity
               activeOpacity={ACTIVE_OPACITY}
               onPress={() => {
-                setProductData(item);
+                setProductData([item]);
                 navigation.navigate("ProductDetail", { name: "Product Details" });
               }}
             >
@@ -180,12 +158,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: screenWidth * 0.45,
     borderRadius: 15,
-    overflow: 'hidden',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    overflow:'hidden',
+    elevation:5,
+    shadowColor:'#000',
+    shadowOffset:{ width: 0, height: 2 },
     shadowOpacity: 1,
-    shadowRadius: 3,
+    shadowRadius:3,
     padding: 5,
     margin: 10,
   },
@@ -242,7 +220,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   text: {
-    fontSize: 16,
+    fontSize: 12,
     color: COLORS.primary,
     textAlign: "center",
     fontFamily: FONTS.AvenirDemi,

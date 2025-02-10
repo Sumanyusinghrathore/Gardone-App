@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native'; // Import React Navigation hooks
-import { COLORS, FONTS } from '../../themes/theme';
-import { RootStackParamList } from '../../routes/types';
-import { RouteProp } from '@react-navigation/native';
-import { ACTIVE_OPACITY } from '../../themes/genericStyles';
-import PlusIcon from '../../assets/Icons/PlusVector.svg';
-import { Dimensions } from 'react-native';
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useData } from '../../context/DataContext/DataContext';
 import LinearGradient from 'react-native-linear-gradient';
-import Minus from '../../assets/Icons/Divid.svg'
-import Plus from '../../assets/Icons/Plus.svg'
+import PlusIcon from '../../assets/Icons/PlusVector.svg';
+import Minus from '../../assets/Icons/Divid.svg';
+import Plus from '../../assets/Icons/Plus.svg';
+import { COLORS, FONTS } from '../../themes/theme';
+import { ACTIVE_OPACITY } from '../../themes/genericStyles';
+import { RootStackParamList } from '../../routes/types';
+import { useData } from '../../context/DataContext/DataContext';
 
 const { width: screenWidth } = Dimensions.get('window');
+
 type RouteParams = RouteProp<RootStackParamList, 'Categorie'>;
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -108,17 +116,15 @@ const ArrivalscardData = [
   },
 ];
 
- 
-
-  
-
 const Categorie = () => {
-  const route = useRoute<RouteParams>(); // Type the route hook with RouteParams
+  const route = useRoute<RouteParams>();
   const categoryName = route.params?.name;
-  const [quantity, setQuantity] = useState(0);
-  const [showQuantity, setShowQuantity] = useState(false);
   const navigation = useNavigation<NavigationProp>();
-  const { setProductData } = useData();  // Use setProductData from context
+  const { setProductData, cardQuantities, handleAddButtonPress, handleIncreaseQuantity, handleDecreaseQuantity } = useData();
+
+  // Use an object to keep track of each card's quantity by its index.
+  // const [cardQuantities, setCardQuantities] = useState<{ [key: number]: number }>({});
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: categoryName,
@@ -126,84 +132,86 @@ const Categorie = () => {
   }, [navigation, categoryName]);
 
   // Filter the data based on the category name
-  const filteredData = ArrivalscardData.filter(item =>
+  const filteredData = ArrivalscardData.filter((item) =>
     item.type.toLowerCase() === categoryName?.toLocaleLowerCase()
   );
+
+  // Navigate to product detail and set the current product data
   const handleCardPress = (item: any) => {
-    console.log("Product Data:");
+    console.log('Product Data:', item);
     setProductData(item);
     navigation.navigate('ProductDetail', { name: 'Product Details' });
   };
 
-  const handleAddButtonPress = (item: any) => {
-    setProductData(item);
-    setShowQuantity(true);
-    setQuantity(1);
-  };
-
-  const handleIncreaseQuantity = () => setQuantity(prev => prev + 1);
-  const handleDecreaseQuantity = () => {
-    setQuantity(prev => (prev > 0 ? prev - 1 : 0));
-    if (quantity === 1) {
-      setShowQuantity(false);
-    }
-  };
+  
 
   return (
     <View style={styles.container}>
-      {/* Render a list of items based on the filtered data */}
       <FlatList
+        key={categoryName}
         data={filteredData}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={handleCardPress} activeOpacity={ACTIVE_OPACITY}>
-          <ImageBackground source={item.Backgroungimg}
-        style={styles.cardContainer}
-        imageStyle={{ borderRadius: 15 }}>
-            <View style={styles.cardContent}>
-              {/* Image on the left side */}
-              <View style={styles.imageWrapper}>
-                <Image source={item.image} style={styles.image} />
-              </View>
-
-              {/* Text content on the right side */}
-              <View style={styles.textContainer}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.subText}>{item.type}</Text>
-                <Text style={styles.subText}>{item.age}</Text>
-                <Text style={styles.price}>{item.price}</Text>
-              </View>
-
-              {/* Add button */}
-              {showQuantity ? (
-              <LinearGradient
-                              colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
-                              style={styles.gradientBorder}
-                            >
-                              
-              <View style={styles.quantityContainer}>
-                {/* <Text style={styles.quantityText}>Qty:</Text> */}
-                <TouchableOpacity style={styles.quantityButton} onPress={handleDecreaseQuantity}>
-                  <Minus width={25} height={25} fill={COLORS.white} />
-                </TouchableOpacity>
-                <Text style={styles.quantityText}>{quantity}</Text>
-                <TouchableOpacity style={styles.quantityButton} onPress={handleIncreaseQuantity}>
-                  <Plus width={25} height={25} fill={COLORS.white} />
-                </TouchableOpacity>
-              </View>
-              </LinearGradient>
-            ) : (
-              <TouchableOpacity 
-                onPress={handleAddButtonPress} 
-                style={styles.addButton} 
-                activeOpacity={ACTIVE_OPACITY}
+        renderItem={({ item, index }) => {
+          const currentQuantity = cardQuantities[index] || 0;
+          return (
+            <TouchableOpacity
+              onPress={() => handleCardPress(item)}
+              activeOpacity={ACTIVE_OPACITY}
+            >
+              <ImageBackground
+                source={item.Backgroungimg}
+                style={styles.cardContainer}
+                imageStyle={{ borderRadius: 15 }}
               >
-                <PlusIcon width={20} height={20} fill="#fff" />
-              </TouchableOpacity>
-            )}
-            </View>
-          </ImageBackground>
-          </TouchableOpacity>
-        )}
+                <View style={styles.cardContent}>
+                  {/* Image on the left side */}
+                  <View style={styles.imageWrapper}>
+                    <Image source={item.image} style={styles.image} />
+                  </View>
+
+                  {/* Text content on the right side */}
+                  <View style={styles.textContainer}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.subText}>{item.type}</Text>
+                    <Text style={styles.subText}>{item.age}</Text>
+                    <Text style={styles.price}>{item.price}</Text>
+                  </View>
+
+                  {/* Conditionally render the "Add" button or the quantity controller */}
+                  {currentQuantity > 0 ? (
+                    <LinearGradient
+                      colors={['rgba(173, 184, 21, 1)', 'rgba(24, 57, 42, 1)']}
+                      style={styles.gradientBorder}
+                    >
+                      <View style={styles.quantityContainer}>
+                        <TouchableOpacity
+                          style={styles.quantityButton}
+                          onPress={() => handleDecreaseQuantity(index)}
+                        >
+                          <Minus width={25} height={25} fill={COLORS.white} />
+                        </TouchableOpacity>
+                        <Text style={styles.quantityText}>{currentQuantity}</Text>
+                        <TouchableOpacity
+                          style={styles.quantityButton}
+                          onPress={() => handleIncreaseQuantity(index)}
+                        >
+                          <Plus width={25} height={25} fill={COLORS.white} />
+                        </TouchableOpacity>
+                      </View>
+                    </LinearGradient>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => handleAddButtonPress(item, index)}
+                      style={styles.addButton}
+                      activeOpacity={ACTIVE_OPACITY}
+                    >
+                      <PlusIcon width={20} height={20} fill="#fff" />
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </ImageBackground>
+            </TouchableOpacity>
+          );
+        }}
       />
     </View>
   );
@@ -212,30 +220,25 @@ const Categorie = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: COLORS.white,
-  },
-  text: {
-    fontSize: 24,
-    marginBottom: 10,
-    color: COLORS.primary
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardContainer: {
     width: screenWidth * 0.9,
+    height: 140,
     borderRadius: 15,
     overflow: 'hidden',
-    elevation: 5, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
+    padding: 5,
+    marginVertical: 10,
+    elevation: 5, // Android shadow
+    shadowColor: '#000', // iOS shadow
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 3,
-    padding: 5,
-    height: 140,
-    marginVertical: 10
   },
   cardContent: {
-    flexDirection: 'row', // Align image and text side by side
+    flexDirection: 'row',
     alignItems: 'center',
   },
   imageWrapper: {
@@ -245,7 +248,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
-    marginHorizontal: 10, // Space between image and text
+    marginHorizontal: 10,
     marginVertical: 15,
   },
   image: {
@@ -254,7 +257,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   textContainer: {
-    flex: 1, // Take up remaining space
+    flex: 1,
     justifyContent: 'center',
   },
   title: {
@@ -286,33 +289,27 @@ const styles = StyleSheet.create({
     top: 90,
     right: 10,
   },
-  addButtonText: {
-    fontSize: 20,
-    color: COLORS.primary,
-  },
   quantityContainer: {
     flexDirection: 'row',
-    marginTop: "auto",
-    borderRadius: 5,
     backgroundColor: COLORS.white,
+    borderRadius: 5,
     padding: 3,
+    marginTop: 'auto',
   },
   gradientBorder: {
     borderRadius: 5,
     padding: 2,
-    marginTop:'auto',
-    marginBottom:10,
-    marginHorizontal:10
-    
+    marginTop: 'auto',
+    marginBottom: 10,
+    marginHorizontal: 10,
   },
   quantityButton: {
     paddingVertical: 0,
-  },
+  },          
   quantityText: {
     fontSize: 14,
     marginHorizontal: 10,
     color: COLORS.black,
-    marginVertical: 0,
   },
 });
 

@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { useForm } from "react-hook-form";
 import CustomInput from "../../components/CustomInputs/Custominputs";
@@ -58,7 +59,7 @@ const ChangePassword = () => {
               />
             </TouchableOpacity>
             {/* Forgot Password Text */}
-            <TouchableOpacity style={styles.forgotPassword}>
+            <TouchableOpacity style={styles.forgotPassword} onPress={() => Alert.alert("Forgot Password")}>
               <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
             </TouchableOpacity>
           </View>
